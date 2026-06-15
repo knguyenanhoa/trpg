@@ -119,7 +119,11 @@ class InventoryScreen(BaseScreen):
             return
 
         # Tab switching
-        if key == "\t" or key == "e":
+        if key == "\t":
+            self.mode = "backpack" if self.mode == "equipped" else "equipped"
+            self.cursor = 0
+            return
+        if key == "e":
             self.mode = "equipped"
             self.cursor = 0
             return

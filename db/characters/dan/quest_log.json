@@ -1,0 +1,74 @@
+[
+  {
+    "quest_id": "5e34b1e4-801b-4489-8a74-97b7acd0c45c",
+    "quest_name": "gym",
+    "status": "completed",
+    "started_at": "2026-06-15T21:54:51.498984+07:00",
+    "completed_at": "2026-06-15T21:55:42.623191+07:00",
+    "duration_seconds": 51,
+    "xp_granted": 10,
+    "stats_affected": [
+      "str",
+      "con",
+      "cha"
+    ],
+    "item_dropped": null
+  },
+  {
+    "quest_id": "0132cf19-4d67-4d62-b702-0afb7d9f88fb",
+    "quest_name": "go tax",
+    "status": "completed",
+    "started_at": "2026-06-15T21:54:59.739768+07:00",
+    "completed_at": "2026-06-15T21:55:47.922998+07:00",
+    "duration_seconds": 48,
+    "xp_granted": 90,
+    "stats_affected": [
+      "int",
+      "wis"
+    ],
+    "item_dropped": null
+  },
+  {
+    "quest_id": "0132cf19-4d67-4d62-b702-0afb7d9f88fb",
+    "quest_name": "go tax",
+    "status": "completed",
+    "started_at": "2026-06-15T22:03:51.633732+07:00",
+    "completed_at": "2026-06-15T22:03:53.117825+07:00",
+    "duration_seconds": 1,
+    "xp_granted": 90,
+    "stats_affected": [
+      "int",
+      "wis"
+    ],
+    "item_dropped": null
+  },
+  {
+    "quest_id": "3b978b99-4cca-4d83-9845-76787139fa1c",
+    "quest_name": "test quest",
+    "status": "completed",
+    "started_at": "2026-06-15T22:12:19.132343+07:00",
+    "completed_at": "2026-06-15T22:12:20.764604+07:00",
+    "duration_seconds": 1,
+    "xp_granted": 250,
+    "stats_affected": [
+      "str",
+      "dex",
+      "int"
+    ],
+    "item_dropped": "884197da-c31e-4e20-baff-a89daaad2cbe"
+  },
+  {
+    "quest_id": "0af77c5e-cf1a-4ea6-8fcb-bf48a9a88d33",
+    "quest_name": "do phieu thu",
+    "status": "completed",
+    "started_at": "2026-06-15T22:30:37.307240+07:00",
+    "completed_at": "2026-06-15T22:30:39.380800+07:00",
+    "duration_seconds": 2,
+    "xp_granted": 40,
+    "stats_affected": [
+      "str",
+      "dex"
+    ],
+    "item_dropped": "fa5c71e9-42a5-4f7f-bdec-1442bfbcfa18"
+  }
+]

@@ -1,8 +1,11 @@
 """Main menu screen."""
 
+import os
+
 from app.tui.base_screen import BaseScreen
 from app.models.character import Character
 from app.engine.leveling import get_current_rank_name
+from app.config import ASSETS_PATH
 
 
 class MainMenuScreen(BaseScreen):
@@ -19,19 +22,47 @@ class MainMenuScreen(BaseScreen):
         super().__init__()
         self.character = character
         self.cursor = 0
+        self.portrait_lines = self._load_portrait()
+
+    def _load_portrait(self) -> list[str]:
+        """Load the character's ASCII portrait from file."""
+        if not self.character.portrait:
+            return []
+        path = os.path.join(ASSETS_PATH, "portraits", self.character.portrait)
+        if not os.path.exists(path):
+            return []
+        try:
+            with open(path, "r") as f:
+                lines = f.read().rstrip("\n").split("\n")
+            return lines
+        except OSError:
+            return []
 
     def render(self):
         t = self.term
-        # Header with character info
         rank_name = get_current_rank_name(self.character.rank)
         level = self.character.level
-        print(t.move_xy(2, 1) + t.bold + t.cyan + self.character.name + t.normal, end="")
-        print(t.move_xy(2, 2) + t.dim + f"Level {level:.1f} | {rank_name}" + t.normal, end="")
-        print(t.move_xy(2, 3) + t.dim + "─" * 40 + t.normal, end="")
 
-        # Menu items
+        # Render portrait on the left side
+        portrait_width = 0
+        color_attr = getattr(t, self.character.portrait_color, "")
+        if self.portrait_lines:
+            portrait_width = max(len(line) for line in self.portrait_lines) + 2
+            for i, line in enumerate(self.portrait_lines):
+                print(t.move_xy(2, 1 + i) + color_attr + line + t.normal, end="")
+
+        # Character info to the right of portrait
+        info_x = 2 + portrait_width
+        print(t.move_xy(info_x, 1) + t.bold + t.cyan + self.character.name + t.normal, end="")
+        print(t.move_xy(info_x, 2) + t.dim + f"Level {level:.1f} | {rank_name}" + t.normal, end="")
+        print(t.move_xy(info_x, 3) + t.dim + f"Age {self.character.age} | {self.character.sex}" + t.normal, end="")
+
+        # Menu items below portrait or info, whichever is taller
+        menu_start_y = max(len(self.portrait_lines) + 2, 5)
+        print(t.move_xy(2, menu_start_y - 1) + t.dim + "─" * 40 + t.normal, end="")
+
         for i, item in enumerate(self.MENU_ITEMS):
-            y = 5 + i
+            y = menu_start_y + i
             if i == self.cursor:
                 print(t.move_xy(2, y) + t.reverse + f" > {item} " + t.normal, end="")
             else:

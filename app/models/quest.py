@@ -15,6 +15,11 @@ class Quest:
     recurrence: str = "none"  # none, daily, monthly
     created_at: str = ""
     active: bool = True
+    paused: bool = False  # Only non-recurring quests can be paused
+
+    def can_pause(self) -> bool:
+        """Only non-recurring quests can be paused."""
+        return self.recurrence == "none"
 
     def to_dict(self) -> dict:
         """Serialize to dictionary."""
@@ -27,6 +32,7 @@ class Quest:
             "recurrence": self.recurrence,
             "created_at": self.created_at,
             "active": self.active,
+            "paused": self.paused,
         }
 
     @classmethod
@@ -41,6 +47,7 @@ class Quest:
             recurrence=data.get("recurrence", "none"),
             created_at=data.get("created_at", ""),
             active=data.get("active", True),
+            paused=data.get("paused", False),
         )
 
 

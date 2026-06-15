@@ -1,0 +1,17 @@
+[
+  {
+    "id": "5e34b1e4-801b-4489-8a74-97b7acd0c45c",
+    "name": "gym",
+    "description": "go to gym",
+    "difficulty": 1.0,
+    "stats": [
+      "str",
+      "con",
+      "cha"
+    ],
+    "recurrence": "daily",
+    "created_at": "2026-06-15T21:53:25.726363+07:00",
+    "active": true,
+    "paused": false
+  }
+]

@@ -1,0 +1,36 @@
+[
+  {
+    "id": "884197da-c31e-4e20-baff-a89daaad2cbe",
+    "name": "Iron Greaves",
+    "slot": "feet",
+    "rarity": "legendary",
+    "stats": {
+      "istr": 11,
+      "idex": 2.5,
+      "icon": 11,
+      "iint": 3.9,
+      "iwis": -3.3,
+      "icha": -6.3
+    },
+    "sprite": "assets/items/iron_greaves.txt",
+    "acquired_at": "2026-06-15T22:12:20.766310+07:00",
+    "equipped": true
+  },
+  {
+    "id": "fa5c71e9-42a5-4f7f-bdec-1442bfbcfa18",
+    "name": "Leather Vest",
+    "slot": "chest",
+    "rarity": "normal",
+    "stats": {
+      "istr": 11,
+      "idex": 4.7,
+      "icon": -4.4,
+      "iint": -4.7,
+      "iwis": -2.2,
+      "icha": -6.2
+    },
+    "sprite": "assets/items/leather_vest.txt",
+    "acquired_at": "2026-06-15T22:30:39.382946+07:00",
+    "equipped": false
+  }
+]

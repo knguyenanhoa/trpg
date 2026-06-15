@@ -4,8 +4,9 @@ This is a TUI RPG for real life, so anyone can create a character, define their 
 # Overall game design
 - Based on DnD style games but reduced scope.
 - Select character or create with name, age, sex and stats. Stats should be manually entered or estimated by table lookup (male/female and age map to stats with ±2 random variation).
-- Multiple characters are supported. A character selection screen is shown at launch.
+- Multiple characters are supported. A character selection screen is shown at launch. Characters can be deleted by pressing 'd' on the selection screen, gated by typing the character's name to confirm.
 - A back story for the character is optional (max 500 chars). The character should be given an ascii portrait from a predefined set. Allow the player to specify the colour of the portrait from {white, green, blue, yellow, red, cyan, magenta}.
+- The character's ASCII portrait is displayed on the main menu to the left of the character name, rendered in the player's chosen colour. Portraits are compact (4 lines tall) to stay proportional with the character info section.
 - Stats are tracked per player, and are increased by completing quests.
 - Quests are self designed and assigned. Quests record difficulty, recurrence type and stat types.
 - The main activities the player will be doing in the game are: stat viewing, quest viewing and creation, quest completion, inventory management and item equipment.
@@ -26,6 +27,13 @@ This is a TUI RPG for real life, so anyone can create a character, define their 
 - Quests can define certain $CS that, upon completion, will grant experience towards those stats. The total XP is split equally among the quest's assigned stats. The amount of experience depends on the quest difficulty.
 - Quest difficulty is recorded as a float from 0.0 to 5.0. Experience granted is: `xp_granted(difficulty) = 10 * (difficulty ^ 2)`.
 - Quest recurrence are of the types none, daily, monthly and should recur automatically.
+- Quests can be paused. Only non-recurring quests can be paused. Pausing a quest stops it from being started or completed. Recurring quests cannot be paused because they have time-bound obligations.
+- The quest screen has two tabs: Active and Completed. Active shows quests that can still be worked on. Completed shows finished non-recurring quests. Quests can be deleted from either list.
+- Quest lists are sorted alphabetically.
+- Quest status is color coded: green for started/active, red for paused.
+- Quest creation uses a condensed single-form interface where all fields (name, difficulty, recurrence, stats, description) are visible at once. Tab moves to the next field, Shift-Tab to the previous. For recurrence, use j/k or Space to cycle through options. For stats, j/k navigates the stat list and Space toggles the selected stat. Enter submits the form.
+- Non-recurring (one-time) quests, upon completion, are removed from the active list and moved to the completed list.
+- Recurring quests remain in the active list after completion but enforce completion limits: daily quests can only be completed once per day, monthly quests once per month.
 - Completed quests should be tracked in a log for the character, with start timestamp, completion timestamp and duration (computed from timestamps, not player-entered). Recurring quests are to be tracked separately per occurrence, not grouped.
 - Recurring quests, if missed, should be marked as failed. Daily quests must be completed before 23:59:59 of the current day. Monthly quests must be completed before end of the current month. No grace period. Timezone is UTC+7 (configurable).
 - Failed quests reduce experience by 1/2 of the experience that would have been gained had the quest succeeded.
@@ -51,7 +59,7 @@ This is a TUI RPG for real life, so anyone can create a character, define their 
 - definitions/equipment_slots.json — List of valid equipment slots.
 - assets/portraits/ — ASCII character portraits (.txt files).
 - assets/items/ — ASCII item sprites (.txt files).
-- db/ — Runtime data, organized per character (db/characters/{name}/). Contains character.json, quests.json, quest_log.json, inventory.json, active_quests.json per character.
+- db/ — Runtime data, organized per character (db/characters/{name}/). Contains character.json, quests.json, quest_log.json, inventory.json, active_quests.json, completed_quests.json per character.
 - db/config.json — Global configuration (timezone etc).
 
 # Architecture and required tech stack
@@ -90,7 +98,7 @@ x-lrpg/
 │   │   ├── character_create.py     # Character creation flow
 │   │   ├── main_menu.py            # Main menu (Stats/Quests/Inventory)
 │   │   ├── stats_screen.py         # Stat viewing with XP bars
-│   │   ├── quest_screen.py         # Quest list, creation, start, complete
+│   │   ├── quest_screen.py         # Quest list, creation, start, complete, pause
 │   │   ├── inventory_screen.py     # Item viewing, equip/unequip
 │   │   └── fzf_picker.py           # FZF integration + built-in fallback
 │   ├── models/
@@ -130,7 +138,8 @@ x-lrpg/
 │           ├── quests.json
 │           ├── quest_log.json
 │           ├── inventory.json
-│           └── active_quests.json
+│           ├── active_quests.json
+│           └── completed_quests.json
 └── definitions/
     ├── ranks.json
     ├── items.json
@@ -145,22 +154,25 @@ x-lrpg/
 | Key | Action |
 |-----|--------|
 | h / ← | Move left / Back |
-| j / ↓ | Move down |
-| k / ↑ | Move up |
+| j / ↓ | Move down / Next option |
+| k / ↑ | Move up / Previous option |
 | l / → | Move right / Select |
-| Enter | Select / Confirm |
+| Enter | Select / Confirm / Submit form |
 | Esc | Back / Cancel |
 | q | Quit application |
 | ? | Toggle help overlay |
 | / | Search (in lists) |
-| n | New (context-dependent) |
-| d | Delete (context-dependent) |
+| n | New (character or quest) |
+| d | Delete (character, quest from active or completed list) |
 | s | Start quest |
 | c | Complete quest |
-| e | Switch to equipped tab |
-| b | Switch to backpack tab |
+| p | Pause/unpause quest (non-recurring only) |
+| Tab | Next field (form) / Switch tabs (lists) |
+| Shift-Tab | Previous field (form) |
+| e | Switch to equipped tab (inventory) |
+| b | Switch to backpack tab (inventory) |
 | r | Rank up (stats screen) |
-| Space | Toggle selection (stat picker) |
+| Space | Toggle selection (stats in quest form, recurrence cycle) |
 | Ctrl+C | Force quit |
 
 # AGENT: Implementation guidance

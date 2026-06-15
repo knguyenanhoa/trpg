@@ -71,6 +71,14 @@ def load_character(folder_name: str) -> Character | None:
     return Character.from_dict(data)
 
 
+def delete_character(folder_name: str):
+    """Delete a character's entire data folder."""
+    import shutil
+    char_path = os.path.join(DB_PATH, "characters", folder_name)
+    if os.path.exists(char_path):
+        shutil.rmtree(char_path)
+
+
 # --- Quest operations ---
 
 def save_quests(character_name: str, quests: list[Quest]):
@@ -135,6 +143,21 @@ def load_active_quests(character_name: str) -> dict[str, str]:
     """Load active quest start times."""
     path = os.path.join(_char_dir(character_name), "active_quests.json")
     return _read_json(path, default={})
+
+
+# --- Completed quests (non-recurring quests that are done) ---
+
+def save_completed_quests(character_name: str, quests: list[Quest]):
+    """Save completed quest definitions (for history viewing)."""
+    path = os.path.join(_char_dir(character_name), "completed_quests.json")
+    _atomic_write(path, [q.to_dict() for q in quests])
+
+
+def load_completed_quests(character_name: str) -> list[Quest]:
+    """Load completed quest definitions."""
+    path = os.path.join(_char_dir(character_name), "completed_quests.json")
+    data = _read_json(path, default=[])
+    return [Quest.from_dict(d) for d in data]
 
 
 # --- Global config ---
