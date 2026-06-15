@@ -1,0 +1,10 @@
+[
+  {"name": "Leather Vest", "slot": "chest", "sprite": "assets/items/leather_vest.txt"},
+  {"name": "Chain Mail", "slot": "chest", "sprite": "assets/items/chain_mail.txt"},
+  {"name": "Plate Armor", "slot": "chest", "sprite": "assets/items/plate_armor.txt"},
+  {"name": "Robe of the Mage", "slot": "chest", "sprite": "assets/items/robe_of_the_mage.txt"},
+  {"name": "Leather Leggings", "slot": "legs", "sprite": "assets/items/leather_leggings.txt"},
+  {"name": "Chain Leggings", "slot": "legs", "sprite": "assets/items/chain_leggings.txt"},
+  {"name": "Plate Greaves", "slot": "legs", "sprite": "assets/items/plate_greaves.txt"},
+  {"name": "Silk Trousers", "slot": "legs", "sprite": "assets/items/silk_trousers.txt"}
+]

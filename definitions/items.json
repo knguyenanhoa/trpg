@@ -1,0 +1,16 @@
+[
+  {"name": "Iron Ring", "slot": "accessory", "sprite": "assets/items/iron_ring.txt"},
+  {"name": "Silver Amulet", "slot": "accessory", "sprite": "assets/items/silver_amulet.txt"},
+  {"name": "Leather Gloves", "slot": "hands", "sprite": "assets/items/leather_gloves.txt"},
+  {"name": "Iron Gauntlets", "slot": "hands", "sprite": "assets/items/iron_gauntlets.txt"},
+  {"name": "Leather Boots", "slot": "feet", "sprite": "assets/items/leather_boots.txt"},
+  {"name": "Iron Greaves", "slot": "feet", "sprite": "assets/items/iron_greaves.txt"},
+  {"name": "Steel Boots", "slot": "feet", "sprite": "assets/items/steel_boots.txt"},
+  {"name": "Cloth Hood", "slot": "head", "sprite": "assets/items/cloth_hood.txt"},
+  {"name": "Iron Helm", "slot": "head", "sprite": "assets/items/iron_helm.txt"},
+  {"name": "Steel Helm", "slot": "head", "sprite": "assets/items/steel_helm.txt"},
+  {"name": "Crown of Wisdom", "slot": "head", "sprite": "assets/items/crown_of_wisdom.txt"},
+  {"name": "Buckler", "slot": "offhand", "sprite": "assets/items/buckler.txt"},
+  {"name": "Tower Shield", "slot": "offhand", "sprite": "assets/items/tower_shield.txt"},
+  {"name": "Spell Tome", "slot": "offhand", "sprite": "assets/items/spell_tome.txt"}
+]

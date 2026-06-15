@@ -1,0 +1,12 @@
+[
+  {"name": "Iron Sword", "slot": "weapon", "sprite": "assets/items/iron_sword.txt"},
+  {"name": "Steel Sword", "slot": "weapon", "sprite": "assets/items/steel_sword.txt"},
+  {"name": "Battle Axe", "slot": "weapon", "sprite": "assets/items/battle_axe.txt"},
+  {"name": "War Hammer", "slot": "weapon", "sprite": "assets/items/war_hammer.txt"},
+  {"name": "Longbow", "slot": "weapon", "sprite": "assets/items/longbow.txt"},
+  {"name": "Staff of Power", "slot": "weapon", "sprite": "assets/items/staff_of_power.txt"},
+  {"name": "Dagger", "slot": "weapon", "sprite": "assets/items/dagger.txt"},
+  {"name": "Rapier", "slot": "weapon", "sprite": "assets/items/rapier.txt"},
+  {"name": "Mace", "slot": "weapon", "sprite": "assets/items/mace.txt"},
+  {"name": "Spear", "slot": "weapon", "sprite": "assets/items/spear.txt"}
+]
