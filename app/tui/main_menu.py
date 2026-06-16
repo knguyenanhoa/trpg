@@ -15,7 +15,7 @@ class MainMenuScreen(BaseScreen):
         "Stats",
         "Quests",
         "Inventory",
-        "Back to Characters",
+        "Switch Character",
     ]
 
     def __init__(self, character: Character):
@@ -56,9 +56,10 @@ class MainMenuScreen(BaseScreen):
         print(t.move_xy(info_x, 1) + t.bold + t.cyan + self.character.name + t.normal, end="")
         print(t.move_xy(info_x, 2) + t.dim + f"Level {level:.1f} | {rank_name}" + t.normal, end="")
         print(t.move_xy(info_x, 3) + t.dim + f"Age {self.character.age} | {self.character.sex}" + t.normal, end="")
+        print(t.move_xy(info_x, 4) + t.yellow + f"Coins: {self.character.coins}" + t.normal, end="")
 
         # Menu items below portrait or info, whichever is taller
-        menu_start_y = max(len(self.portrait_lines) + 2, 5)
+        menu_start_y = max(len(self.portrait_lines) + 2, 6)
         print(t.move_xy(2, menu_start_y - 1) + t.dim + "─" * 40 + t.normal, end="")
 
         for i, item in enumerate(self.MENU_ITEMS):
@@ -82,7 +83,9 @@ class MainMenuScreen(BaseScreen):
         elif key.code == t.KEY_ENTER or key == "l":
             self._select_item()
         elif key.code == t.KEY_ESCAPE or key == "h":
-            self.manager.pop()
+            # Go to character select
+            from app.tui.character_select import CharacterSelectScreen
+            self.manager.replace(CharacterSelectScreen())
 
     def _select_item(self):
         choice = self.MENU_ITEMS[self.cursor]
@@ -95,5 +98,6 @@ class MainMenuScreen(BaseScreen):
         elif choice == "Inventory":
             from app.tui.inventory_screen import InventoryScreen
             self.manager.push(InventoryScreen(self.character))
-        elif choice == "Back to Characters":
-            self.manager.pop()
+        elif choice == "Switch Character":
+            from app.tui.character_select import CharacterSelectScreen
+            self.manager.replace(CharacterSelectScreen())

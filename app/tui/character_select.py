@@ -87,6 +87,7 @@ class CharacterSelectScreen(BaseScreen):
             else:
                 char = load_character(result)
                 if char:
+                    self.manager.set_last_played(char.name)
                     from app.tui.main_menu import MainMenuScreen
                     self.manager.replace(MainMenuScreen(char))
 

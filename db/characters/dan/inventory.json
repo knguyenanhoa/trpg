@@ -31,6 +31,6 @@
     },
     "sprite": "assets/items/leather_vest.txt",
     "acquired_at": "2026-06-15T22:30:39.382946+07:00",
-    "equipped": false
+    "equipped": true
   }
 ]

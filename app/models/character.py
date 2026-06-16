@@ -17,6 +17,7 @@ class Character:
     portrait: str = ""  # filename in assets/portraits/
     portrait_color: str = "white"
     rank: int = 1
+    coins: int = 0
     created_at: str = ""
 
     @property
@@ -39,6 +40,7 @@ class Character:
             "portrait": self.portrait,
             "portrait_color": self.portrait_color,
             "rank": self.rank,
+            "coins": self.coins,
             "created_at": self.created_at,
         }
 
@@ -54,5 +56,6 @@ class Character:
             portrait=data.get("portrait", ""),
             portrait_color=data.get("portrait_color", "white"),
             rank=data.get("rank", 1),
+            coins=data.get("coins", 0),
             created_at=data.get("created_at", ""),
         )

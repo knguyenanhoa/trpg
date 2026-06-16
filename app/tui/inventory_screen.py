@@ -5,8 +5,9 @@ from app.tui.fzf_picker import InlinePicker
 from app.models.character import Character
 from app.models.item import Item
 from app.config import EQUIPMENT_SLOTS
-from app.db.file_store import load_inventory, save_inventory
+from app.db.file_store import load_inventory, save_inventory, save_character
 from app.utils.colors import RARITY_COLORS
+from app.engine.economy import item_value
 
 
 class InventoryScreen(BaseScreen):
@@ -36,7 +37,8 @@ class InventoryScreen(BaseScreen):
 
     def render(self):
         t = self.term
-        print(t.move_xy(2, 1) + t.bold + t.cyan + f"{self.character.name} — Inventory" + t.normal, end="")
+        print(t.move_xy(2, 1) + t.bold + t.cyan + f"{self.character.name} — Inventory" + t.normal
+              + t.yellow + f"  Coins: {self.character.coins}" + t.normal, end="")
         print(t.move_xy(2, 2) + t.dim + "─" * 50 + t.normal, end="")
 
         if self.message:
@@ -53,7 +55,7 @@ class InventoryScreen(BaseScreen):
         else:
             self._render_backpack()
 
-        controls = "Tab/e/b: switch  Enter: equip/unequip  Esc: back  ?: help"
+        controls = "Tab/e/b:switch  Enter:equip/unequip  s:sell  Esc:back  ?:help"
         print(t.move_xy(2, t.height - 1) + t.dim + controls + t.normal, end="")
 
     def _render_equipped(self):
@@ -65,7 +67,8 @@ class InventoryScreen(BaseScreen):
             prefix = " > " if i == self.cursor else "   "
             if item:
                 color_attr = getattr(t, RARITY_COLORS.get(item.rarity, "white"), "")
-                line = f"{prefix}{slot:10s}: " + color_attr + f"{item.name}" + t.normal + f" ({item.rarity})"
+                val = item_value(item)
+                line = f"{prefix}{slot:10s}: " + color_attr + f"{item.name}" + t.normal + f" ({item.rarity}) [{val}c]"
             else:
                 line = f"{prefix}{slot:10s}: " + t.dim + "empty" + t.normal
             print(t.move_xy(2, y + i) + line, end="")
@@ -87,7 +90,8 @@ class InventoryScreen(BaseScreen):
         for i, item in enumerate(backpack):
             prefix = " > " if i == self.cursor else "   "
             color_attr = getattr(t, RARITY_COLORS.get(item.rarity, "white"), "")
-            line = f"{prefix}" + color_attr + f"{item.name}" + t.normal + f" ({item.rarity}) [{item.slot}]"
+            val = item_value(item)
+            line = f"{prefix}" + color_attr + f"{item.name}" + t.normal + f" ({item.rarity}) [{item.slot}] [{val}c]"
             print(t.move_xy(2, y + i) + line, end="")
 
         # Show selected item stats
@@ -96,14 +100,15 @@ class InventoryScreen(BaseScreen):
 
     def _render_item_stats(self, item: Item, y: int):
         t = self.term
-        print(t.move_xy(2, y) + t.bold + f"  {item.name}" + t.normal + f" — {item.rarity} {item.slot}", end="")
+        val = item_value(item)
+        print(t.move_xy(2, y) + t.bold + f"  {item.name}" + t.normal + f" — {item.rarity} {item.slot} — " + t.yellow + f"Value: {val} coins" + t.normal, end="")
         stats_dict = item.stats.to_dict()
         stat_parts = []
-        for stat, val in stats_dict.items():
-            if val >= 0:
-                stat_parts.append(t.green + f"{stat}:+{val:.1f}" + t.normal)
+        for stat, v in stats_dict.items():
+            if v >= 0:
+                stat_parts.append(t.green + f"{stat}:+{v:.1f}" + t.normal)
             else:
-                stat_parts.append(t.red + f"{stat}:{val:.1f}" + t.normal)
+                stat_parts.append(t.red + f"{stat}:{v:.1f}" + t.normal)
         print(t.move_xy(2, y + 1) + "  " + "  ".join(stat_parts), end="")
 
     def on_key(self, key):
@@ -132,6 +137,11 @@ class InventoryScreen(BaseScreen):
             self.cursor = 0
             return
 
+        # Sell item
+        if key == "s":
+            self._sell_item()
+            return
+
         # Navigation
         max_items = self._max_cursor()
         if key == "j" or key.code == t.KEY_DOWN:
@@ -146,9 +156,35 @@ class InventoryScreen(BaseScreen):
             return len(EQUIPMENT_SLOTS)
         return max(1, len(self._backpack_items()))
 
+    def _sell_item(self):
+        """Sell the currently selected item for coins."""
+        if self.mode == "equipped":
+            slot = EQUIPMENT_SLOTS[self.cursor]
+            equipped = self._equipped_items()
+            item = equipped.get(slot)
+            if not item:
+                self.message = "No item to sell."
+                return
+        else:
+            backpack = self._backpack_items()
+            if not backpack or self.cursor >= len(backpack):
+                self.message = "No item to sell."
+                return
+            item = backpack[self.cursor]
+
+        value = item_value(item)
+        self.character.coins += value
+        self.items.remove(item)
+        save_inventory(self.character.name, self.items)
+        save_character(self.character)
+        self.message = f"Sold {item.name} for {value} coins."
+        # Adjust cursor
+        max_items = self._max_cursor()
+        if self.cursor >= max_items:
+            self.cursor = max(0, max_items - 1)
+
     def _toggle_equip(self):
         if self.mode == "equipped":
-            # Unequip the item in the selected slot
             slot = EQUIPMENT_SLOTS[self.cursor]
             equipped = self._equipped_items()
             item = equipped.get(slot)
@@ -159,12 +195,10 @@ class InventoryScreen(BaseScreen):
             else:
                 self.message = "No item in this slot."
         else:
-            # Equip the selected backpack item
             backpack = self._backpack_items()
             if not backpack or self.cursor >= len(backpack):
                 return
             item = backpack[self.cursor]
-            # Unequip current item in that slot if any
             for i in self.items:
                 if i.equipped and i.slot == item.slot:
                     i.equipped = False

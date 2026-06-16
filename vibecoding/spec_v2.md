@@ -5,6 +5,7 @@ This is a TUI RPG for real life, so anyone can create a character, define their 
 - Based on DnD style games but reduced scope.
 - Select character or create with name, age, sex and stats. Stats should be manually entered or estimated by table lookup (male/female and age map to stats with ±2 random variation).
 - Multiple characters are supported. A character selection screen is shown at launch. Characters can be deleted by pressing 'd' on the selection screen, gated by typing the character's name to confirm.
+- The app remembers the last played character and auto-loads them on startup. If no characters exist, the create screen is shown. From the main menu, "Switch Character" allows selecting a different character or creating a new one.
 - A back story for the character is optional (max 500 chars). The character should be given an ascii portrait from a predefined set. Allow the player to specify the colour of the portrait from {white, green, blue, yellow, red, cyan, magenta}.
 - The character's ASCII portrait is displayed on the main menu to the left of the character name, rendered in the player's chosen colour. Portraits are compact (4 lines tall) to stay proportional with the character info section.
 - Stats are tracked per player, and are increased by completing quests.
@@ -49,6 +50,14 @@ This is a TUI RPG for real life, so anyone can create a character, define their 
 - If an item is acquired by a player, its stats are locked in and not changed, even if the player level changes.
 - Items belong to a fixed equipment slot. Equipment slots: head, chest, legs, feet, hands, weapon, offhand, accessory (8 total). One item per slot.
 
+# Economy design
+- Each character has a coin balance (integer, cannot be negative, starts at 0).
+- Items can be sold from the inventory screen by pressing 's'.
+- An item's value in coins = abs(sum of all its $IS stats) * tier_multiplier, rounded to nearest integer.
+- Tier multipliers: normal=1, uncommon=10, rare=100, epic=1000, legendary=10000.
+- Selling an item removes it from inventory and adds its value to the character's coin balance.
+- Equipped items can also be sold (they are unequipped and removed).
+
 # Required files and folders
 - definitions/ranks.json — Player rank list with $IS thresholds.
 - definitions/items.json — General items listing their names, slots, and sprite paths.
@@ -60,7 +69,7 @@ This is a TUI RPG for real life, so anyone can create a character, define their 
 - assets/portraits/ — ASCII character portraits (.txt files).
 - assets/items/ — ASCII item sprites (.txt files).
 - db/ — Runtime data, organized per character (db/characters/{name}/). Contains character.json, quests.json, quest_log.json, inventory.json, active_quests.json, completed_quests.json per character.
-- db/config.json — Global configuration (timezone etc).
+- db/config.json — Global configuration (timezone, last_played character).
 
 # Architecture and required tech stack
 - Language: Python 3.11+.
