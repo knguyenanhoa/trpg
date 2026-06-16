@@ -65,7 +65,6 @@ This is a TUI RPG for real life, so anyone can create a character, define their 
 - definitions/armour.json — Armour listing their names, slots, and sprite paths.
 - definitions/stat_tables_male.json — Male age bracket mapping to base stats.
 - definitions/stat_tables_female.json — Female age bracket mapping to base stats.
-- definitions/equipment_slots.json — List of valid equipment slots.
 - assets/portraits/ — ASCII character portraits (.txt files).
 - assets/items/ — ASCII item sprites (.txt files).
 - db/ — Runtime data, organized per character (db/characters/{name}/). Contains character.json, quests.json, quest_log.json, inventory.json, active_quests.json, completed_quests.json per character.
@@ -154,7 +153,6 @@ x-lrpg/
     ├── items.json
     ├── weapons.json
     ├── armour.json
-    ├── equipment_slots.json
     ├── stat_tables_male.json
     └── stat_tables_female.json
 ```
