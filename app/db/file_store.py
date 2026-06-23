@@ -4,7 +4,7 @@ import json
 import os
 import tempfile
 
-from app.config import DB_PATH
+from app.config import DB_PATH, DEFINITIONS_PATH
 from app.models.character import Character
 from app.models.quest import Quest, QuestLogEntry
 from app.models.item import Item
@@ -172,3 +172,19 @@ def load_global_config() -> dict:
     """Load global config."""
     path = os.path.join(DB_PATH, "config.json")
     return _read_json(path, default={"timezone_offset": 7})
+
+
+# --- Premade quest templates ---
+
+def load_premade_quest_templates() -> list[dict]:
+    """Load premade quest tree templates from definitions.
+
+    Returns a list of template dicts, each with:
+    - name: template name
+    - description: template description
+    - overquest: dict with overquest fields (name, description, difficulty, stats)
+    - quests: list of quest dicts with ref IDs and next_quests references
+    """
+    path = os.path.join(DEFINITIONS_PATH, "premade_quests.json")
+    data = _read_json(path, default={"templates": []})
+    return data.get("templates", [])

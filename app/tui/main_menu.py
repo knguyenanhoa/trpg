@@ -14,6 +14,7 @@ class MainMenuScreen(BaseScreen):
     MENU_ITEMS = [
         "Stats",
         "Quests",
+        "Quest Editor",
         "Inventory",
         "Switch Character",
     ]
@@ -95,6 +96,9 @@ class MainMenuScreen(BaseScreen):
         elif choice == "Quests":
             from app.tui.quest_screen import QuestScreen
             self.manager.push(QuestScreen(self.character))
+        elif choice == "Quest Editor":
+            from app.tui.quest_editor import QuestEditorScreen
+            self.manager.push(QuestEditorScreen(self.character))
         elif choice == "Inventory":
             from app.tui.inventory_screen import InventoryScreen
             self.manager.push(InventoryScreen(self.character))

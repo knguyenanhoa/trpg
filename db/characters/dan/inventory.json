@@ -15,5 +15,39 @@
     "sprite": "assets/items/iron_greaves.txt",
     "acquired_at": "2026-06-15T22:12:20.766310+07:00",
     "equipped": true
+  },
+  {
+    "id": "d7228a50-5db4-4a24-936e-03ba9ac4ff62",
+    "name": "Battle Axe",
+    "slot": "weapon",
+    "rarity": "rare",
+    "stats": {
+      "istr": -3.2,
+      "idex": 8.8,
+      "icon": 1.0,
+      "iint": 3.7,
+      "iwis": -5.6,
+      "icha": -2.8
+    },
+    "sprite": "assets/items/battle_axe.txt",
+    "acquired_at": "2026-06-23T11:47:42.887466+07:00",
+    "equipped": false
+  },
+  {
+    "id": "42f7097c-cd84-4647-a8af-6bd6c6d34167",
+    "name": "Iron Greaves",
+    "slot": "feet",
+    "rarity": "normal",
+    "stats": {
+      "istr": 6.1,
+      "idex": 3.5,
+      "icon": -0.9,
+      "iint": -4.0,
+      "iwis": -5.8,
+      "icha": 6.6
+    },
+    "sprite": "assets/items/iron_greaves.txt",
+    "acquired_at": "2026-06-23T11:47:47.923650+07:00",
+    "equipped": false
   }
 ]

@@ -12,7 +12,10 @@ from app.db.file_store import (
     save_character, append_quest_log, load_inventory, save_inventory,
     load_completed_quests, save_completed_quests, load_quest_log,
 )
-from app.engine.quest_engine import start_quest, complete_quest
+from app.engine.quest_engine import (
+    start_quest, complete_quest, check_overquest_completion,
+    complete_overquest, get_quest_by_id,
+)
 from app.utils.sanitize import validate_name, sanitize_name, validate_float
 from app.utils.time_utils import now_iso, now, start_of_day, end_of_day, start_of_month, end_of_month, parse_iso
 
@@ -47,8 +50,11 @@ class QuestScreen(BaseScreen):
         self.create_recurrence_cursor = 0  # sub-cursor within recurrence
 
     def _sorted_quests(self) -> list[Quest]:
-        """Return active quests sorted alphabetically."""
-        return sorted(self.quests, key=lambda q: q.name.lower())
+        """Return active quests sorted alphabetically, excluding overquests."""
+        return sorted(
+            [q for q in self.quests if not q.is_overquest],
+            key=lambda q: q.name.lower()
+        )
 
     def _sorted_completed(self) -> list[Quest]:
         """Return completed quests sorted alphabetically."""
@@ -59,7 +65,13 @@ class QuestScreen(BaseScreen):
         items = []
         for q in self._sorted_quests():
             recur = f"({q.recurrence})" if q.recurrence != "none" else ""
-            items.append(f"{q.name} — d:{q.difficulty} {recur}")
+            # Show quest line membership if part of an overquest
+            line_tag = ""
+            if q.overquest_id:
+                oq = get_quest_by_id(self.quests, q.overquest_id)
+                if oq:
+                    line_tag = f"[{oq.name}] "
+            items.append(f"{line_tag}{q.name} — d:{q.difficulty} {recur}")
         items.append("+ New Quest")
         return items
 
@@ -411,6 +423,22 @@ class QuestScreen(BaseScreen):
             save_completed_quests(self.character.name, self.completed_quests)
 
         save_quests(self.character.name, self.quests)
+
+        # Check if this completion triggers an overquest completion
+        if quest.overquest_id:
+            overquest = get_quest_by_id(self.quests, quest.overquest_id)
+            if overquest and check_overquest_completion(self.quests, overquest):
+                oq_log, oq_item = complete_overquest(self.quests, overquest, self.character)
+                save_character(self.character)
+                append_quest_log(self.character.name, oq_log)
+                save_quests(self.character.name, self.quests)
+                msg += f"\n  ★ Quest line '{overquest.name}' COMPLETED! +{oq_log.xp_granted:.0f} XP"
+                if oq_item:
+                    inventory = load_inventory(self.character.name)
+                    inventory.append(oq_item)
+                    save_inventory(self.character.name, inventory)
+                    msg += f" | Item: {oq_item.name} ({oq_item.rarity})"
+
         self.message = msg
         self.picker = None
 

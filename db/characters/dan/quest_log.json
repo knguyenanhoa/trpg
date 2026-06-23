@@ -70,5 +70,63 @@
       "dex"
     ],
     "item_dropped": "fa5c71e9-42a5-4f7f-bdec-1442bfbcfa18"
+  },
+  {
+    "quest_id": "ba61d9dd-7b00-4d18-af54-a321b7407881",
+    "quest_name": "First Workout",
+    "status": "completed",
+    "started_at": "2026-06-23T11:46:36.585182+07:00",
+    "completed_at": "2026-06-23T11:46:46.386673+07:00",
+    "duration_seconds": 9,
+    "xp_granted": 10,
+    "stats_affected": [
+      "str",
+      "con"
+    ],
+    "item_dropped": null
+  },
+  {
+    "quest_id": "bd10ca21-1785-4f97-b4b6-afd84b804228",
+    "quest_name": "One Week Consistent",
+    "status": "completed",
+    "started_at": "2026-06-23T11:47:40.697050+07:00",
+    "completed_at": "2026-06-23T11:47:42.878370+07:00",
+    "duration_seconds": 2,
+    "xp_granted": 90,
+    "stats_affected": [
+      "str",
+      "con",
+      "dex"
+    ],
+    "item_dropped": "d7228a50-5db4-4a24-936e-03ba9ac4ff62"
+  },
+  {
+    "quest_id": "5e34b1e4-801b-4489-8a74-97b7acd0c45c",
+    "quest_name": "gym",
+    "status": "completed",
+    "started_at": "2026-06-15T22:03:32.684849+07:00",
+    "completed_at": "2026-06-23T11:47:46.665477+07:00",
+    "duration_seconds": 654253,
+    "xp_granted": 10,
+    "stats_affected": [
+      "str",
+      "con",
+      "cha"
+    ],
+    "item_dropped": null
+  },
+  {
+    "quest_id": "3bc3d3c4-044e-4934-a0d8-0ced66a79c31",
+    "quest_name": "Three Day Streak",
+    "status": "completed",
+    "started_at": "2026-06-23T11:47:45.336863+07:00",
+    "completed_at": "2026-06-23T11:47:47.923250+07:00",
+    "duration_seconds": 2,
+    "xp_granted": 40,
+    "stats_affected": [
+      "str",
+      "con"
+    ],
+    "item_dropped": "42f7097c-cd84-4647-a8af-6bd6c6d34167"
   }
 ]

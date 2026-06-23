@@ -1,16 +1,61 @@
 [
   {
-    "id": "0af77c5e-cf1a-4ea6-8fcb-bf48a9a88d33",
-    "name": "do phieu thu",
-    "description": "",
-    "difficulty": 2.0,
+    "id": "ba61d9dd-7b00-4d18-af54-a321b7407881",
+    "name": "First Workout",
+    "description": "Complete your first real workout session.",
+    "difficulty": 1.0,
     "stats": [
       "str",
+      "con"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T11:18:05.495736+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "e4420f4c-f79a-4c02-b125-235b6c160565",
+    "next_quests": [
+      "3bc3d3c4-044e-4934-a0d8-0ced66a79c31"
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "bd10ca21-1785-4f97-b4b6-afd84b804228",
+    "name": "One Week Consistent",
+    "description": "Maintain a workout routine for one full week.",
+    "difficulty": 3.0,
+    "stats": [
+      "str",
+      "con",
       "dex"
     ],
     "recurrence": "none",
-    "created_at": "2026-06-15T22:30:34.019082+07:00",
+    "created_at": "2026-06-23T11:18:05.495769+07:00",
     "active": false,
-    "paused": false
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "e4420f4c-f79a-4c02-b125-235b6c160565",
+    "next_quests": [],
+    "status": "completed"
+  },
+  {
+    "id": "3bc3d3c4-044e-4934-a0d8-0ced66a79c31",
+    "name": "Three Day Streak",
+    "description": "Work out three days in a row.",
+    "difficulty": 2.0,
+    "stats": [
+      "str",
+      "con"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T11:18:05.495754+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "e4420f4c-f79a-4c02-b125-235b6c160565",
+    "next_quests": [
+      "bd10ca21-1785-4f97-b4b6-afd84b804228"
+    ],
+    "status": "completed"
   }
 ]

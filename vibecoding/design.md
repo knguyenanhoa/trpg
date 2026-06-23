@@ -424,6 +424,7 @@ MAX_BACKSTORY_LENGTH = 500
 ## 14. Open Items for Future Iterations
 
 - Item reforging / discard mechanics.
+- Item inventory.
 - Quest chains (multi-step quests).
 - Achievement system.
 - Character export/import.

@@ -1,0 +1,235 @@
+{
+  "templates": [
+    {
+      "name": "Fitness Foundation",
+      "description": "A basic fitness quest line building from fundamentals to consistency.",
+      "overquest": {
+        "name": "Fitness Foundation",
+        "description": "Complete a foundational fitness journey from basics to routine.",
+        "difficulty": 3.0,
+        "stats": ["str", "con"]
+      },
+      "quests": [
+        {
+          "ref": "fit_1",
+          "name": "First Workout",
+          "description": "Complete your first real workout session.",
+          "difficulty": 1.0,
+          "stats": ["str", "con"],
+          "recurrence": "none",
+          "next_quests": ["fit_2"]
+        },
+        {
+          "ref": "fit_2",
+          "name": "Three Day Streak",
+          "description": "Work out three days in a row.",
+          "difficulty": 2.0,
+          "stats": ["str", "con"],
+          "recurrence": "none",
+          "next_quests": ["fit_3"]
+        },
+        {
+          "ref": "fit_3",
+          "name": "One Week Consistent",
+          "description": "Maintain a workout routine for one full week.",
+          "difficulty": 3.0,
+          "stats": ["str", "con", "dex"],
+          "recurrence": "none",
+          "next_quests": []
+        }
+      ]
+    },
+    {
+      "name": "Knowledge Seeker",
+      "description": "A learning quest line progressing from curiosity to mastery.",
+      "overquest": {
+        "name": "Knowledge Seeker",
+        "description": "Pursue a complete learning journey in a subject of your choice.",
+        "difficulty": 3.5,
+        "stats": ["int", "wis"]
+      },
+      "quests": [
+        {
+          "ref": "know_1",
+          "name": "Pick a Subject",
+          "description": "Choose a topic you want to learn deeply.",
+          "difficulty": 0.5,
+          "stats": ["int"],
+          "recurrence": "none",
+          "next_quests": ["know_2"]
+        },
+        {
+          "ref": "know_2",
+          "name": "Read for One Hour",
+          "description": "Spend one focused hour reading about your subject.",
+          "difficulty": 1.5,
+          "stats": ["int", "wis"],
+          "recurrence": "none",
+          "next_quests": ["know_3", "know_4"]
+        },
+        {
+          "ref": "know_3",
+          "name": "Take Notes",
+          "description": "Summarize what you learned in your own words.",
+          "difficulty": 2.0,
+          "stats": ["int", "wis"],
+          "recurrence": "none",
+          "next_quests": ["know_5"]
+        },
+        {
+          "ref": "know_4",
+          "name": "Teach Someone",
+          "description": "Explain what you learned to another person.",
+          "difficulty": 2.5,
+          "stats": ["cha", "int"],
+          "recurrence": "none",
+          "next_quests": ["know_5"]
+        },
+        {
+          "ref": "know_5",
+          "name": "Apply the Knowledge",
+          "description": "Use what you learned in a practical project or situation.",
+          "difficulty": 3.5,
+          "stats": ["int", "wis"],
+          "recurrence": "none",
+          "next_quests": []
+        }
+      ]
+    },
+    {
+      "name": "Social Butterfly",
+      "description": "Build social skills step by step from small talks to deep connections.",
+      "overquest": {
+        "name": "Social Butterfly",
+        "description": "Develop your social confidence through progressive challenges.",
+        "difficulty": 3.0,
+        "stats": ["cha", "wis"]
+      },
+      "quests": [
+        {
+          "ref": "soc_1",
+          "name": "Say Hi to a Stranger",
+          "description": "Greet someone you don't know in a friendly way.",
+          "difficulty": 1.0,
+          "stats": ["cha"],
+          "recurrence": "none",
+          "next_quests": ["soc_2"]
+        },
+        {
+          "ref": "soc_2",
+          "name": "Have a 5-Minute Conversation",
+          "description": "Engage in a conversation lasting at least 5 minutes with someone new.",
+          "difficulty": 2.0,
+          "stats": ["cha", "wis"],
+          "recurrence": "none",
+          "next_quests": ["soc_3"]
+        },
+        {
+          "ref": "soc_3",
+          "name": "Plan a Group Activity",
+          "description": "Organize and lead a social gathering or group activity.",
+          "difficulty": 3.0,
+          "stats": ["cha", "wis", "int"],
+          "recurrence": "none",
+          "next_quests": []
+        }
+      ]
+    },
+    {
+      "name": "Daily Discipline",
+      "description": "Build a daily routine habit stack.",
+      "overquest": {
+        "name": "Daily Discipline",
+        "description": "Establish unbreakable daily habits through progressive commitment.",
+        "difficulty": 4.0,
+        "stats": ["con", "wis"]
+      },
+      "quests": [
+        {
+          "ref": "disc_1",
+          "name": "Wake Up on Time",
+          "description": "Wake up at your target time for 3 consecutive days.",
+          "difficulty": 1.5,
+          "stats": ["con"],
+          "recurrence": "none",
+          "next_quests": ["disc_2", "disc_3"]
+        },
+        {
+          "ref": "disc_2",
+          "name": "Morning Routine",
+          "description": "Complete a defined morning routine for 5 days.",
+          "difficulty": 2.5,
+          "stats": ["con", "wis"],
+          "recurrence": "none",
+          "next_quests": ["disc_4"]
+        },
+        {
+          "ref": "disc_3",
+          "name": "Evening Wind-Down",
+          "description": "Follow an evening routine with no screens for 5 days.",
+          "difficulty": 2.5,
+          "stats": ["con", "wis"],
+          "recurrence": "none",
+          "next_quests": ["disc_4"]
+        },
+        {
+          "ref": "disc_4",
+          "name": "Full Day Structure",
+          "description": "Follow your complete daily schedule for one full week.",
+          "difficulty": 4.0,
+          "stats": ["con", "wis", "str"],
+          "recurrence": "none",
+          "next_quests": []
+        }
+      ]
+    },
+    {
+      "name": "Creative Sprint",
+      "description": "A short creative project from ideation to completion.",
+      "overquest": {
+        "name": "Creative Sprint",
+        "description": "Complete a creative project from concept to finished work.",
+        "difficulty": 3.5,
+        "stats": ["int", "dex", "cha"]
+      },
+      "quests": [
+        {
+          "ref": "cre_1",
+          "name": "Brainstorm Ideas",
+          "description": "Generate at least 10 ideas for a creative project.",
+          "difficulty": 1.0,
+          "stats": ["int"],
+          "recurrence": "none",
+          "next_quests": ["cre_2"]
+        },
+        {
+          "ref": "cre_2",
+          "name": "Create a Draft",
+          "description": "Produce a rough first version of your chosen idea.",
+          "difficulty": 2.5,
+          "stats": ["int", "dex"],
+          "recurrence": "none",
+          "next_quests": ["cre_3"]
+        },
+        {
+          "ref": "cre_3",
+          "name": "Refine and Polish",
+          "description": "Iterate on your draft until you're satisfied with the result.",
+          "difficulty": 3.0,
+          "stats": ["dex", "wis"],
+          "recurrence": "none",
+          "next_quests": ["cre_4"]
+        },
+        {
+          "ref": "cre_4",
+          "name": "Share Your Work",
+          "description": "Present or publish your finished creative work.",
+          "difficulty": 2.0,
+          "stats": ["cha"],
+          "recurrence": "none",
+          "next_quests": []
+        }
+      ]
+    }
+  ]
+}

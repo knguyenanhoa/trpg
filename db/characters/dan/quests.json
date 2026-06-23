@@ -12,6 +12,28 @@
     "recurrence": "daily",
     "created_at": "2026-06-15T21:53:25.726363+07:00",
     "active": true,
-    "paused": false
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": null,
+    "next_quests": [],
+    "status": "completed"
+  },
+  {
+    "id": "e4420f4c-f79a-4c02-b125-235b6c160565",
+    "name": "Fitness Foundation",
+    "description": "Complete a foundational fitness journey from basics to routine.",
+    "difficulty": 3.0,
+    "stats": [
+      "str",
+      "con"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T11:18:05.495415+07:00",
+    "active": true,
+    "paused": false,
+    "is_overquest": true,
+    "overquest_id": null,
+    "next_quests": [],
+    "status": "new"
   }
 ]

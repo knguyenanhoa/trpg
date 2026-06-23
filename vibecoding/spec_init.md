@@ -65,11 +65,11 @@ This is a TUI RPG for real life, so anyone can create a character, define their 
 - Properly consider performance.
 - 
 
-# Planning requirements for review before implementation
+# AGENT: Planning requirements for review before implementation
 - Please suggest the language to use such as python or ruby. Do not use pure bash.
 - Suggest the project file structure.
 - Review the rules for levels, experience, stats, and highlight and potential imbalances along with suggestions to fix.
 - Remember that this is a work in progress so expect it to be iteratively improved. Set things up accordingly.
 - Ask at least 3 questions to clarify requirements.
 
-# Do not modify this file
+# AGENT: Do not modify this file

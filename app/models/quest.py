@@ -1,12 +1,28 @@
-"""Quest data model."""
+"""Quest data model.
+
+Quests form a directed graph (quest network). Each quest can reference
+multiple 'next' quests and belong to an overquest (quest line grouping).
+An overquest groups subquests into a quest line and completes when all
+its dependencies are satisfied.
+"""
 
 from dataclasses import dataclass, field
 from typing import Optional
 
+# Valid quest statuses
+QUEST_STATUSES = ["new", "in-progress", "completed", "paused"]
+
 
 @dataclass
 class Quest:
-    """A quest definition."""
+    """A quest definition.
+
+    Quest network fields:
+    - is_overquest: marks this as a quest line grouping node
+    - overquest_id: the overquest this quest belongs to (if any)
+    - next_quests: IDs of quests that come after this one in the network
+    - status: new, in-progress, completed, paused
+    """
     id: str
     name: str
     description: str
@@ -16,6 +32,11 @@ class Quest:
     created_at: str = ""
     active: bool = True
     paused: bool = False  # Only non-recurring quests can be paused
+    # Quest network fields
+    is_overquest: bool = False
+    overquest_id: Optional[str] = None
+    next_quests: list[str] = field(default_factory=list)
+    status: str = "new"
 
     def can_pause(self) -> bool:
         """Only non-recurring quests can be paused."""
@@ -33,6 +54,10 @@ class Quest:
             "created_at": self.created_at,
             "active": self.active,
             "paused": self.paused,
+            "is_overquest": self.is_overquest,
+            "overquest_id": self.overquest_id,
+            "next_quests": self.next_quests,
+            "status": self.status,
         }
 
     @classmethod
@@ -48,6 +73,10 @@ class Quest:
             created_at=data.get("created_at", ""),
             active=data.get("active", True),
             paused=data.get("paused", False),
+            is_overquest=data.get("is_overquest", False),
+            overquest_id=data.get("overquest_id"),
+            next_quests=data.get("next_quests", []),
+            status=data.get("status", "new"),
         )
 
 

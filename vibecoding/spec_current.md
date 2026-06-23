@@ -40,6 +40,26 @@ This is a TUI RPG for real life, so anyone can create a character, define their 
 - Failed quests reduce experience by 1/2 of the experience that would have been gained had the quest succeeded.
 - Quests have a 50% chance to drop an item on completion.
 
+## Quest network (overquests and quest lines)
+- Quests form a directed graph (quest network). Each quest can reference multiple "next" quests, and any quest can have many other quests referencing it.
+- An **overquest** is a quest marked with `is_overquest=True` that groups subquests together into a quest line. It serves as the end goal of that line.
+- Subquests belong to an overquest via `overquest_id`. Each subquest tracks its successors in `next_quests` (list of quest IDs).
+- All quests have a `status` field: {new, in-progress, completed, paused}.
+- When all terminal subquests (those with no next_quests within the same overquest) are completed, the overquest is automatically completed with a **3x XP reward multiplier**.
+- An overquest must have at least 1 subquest (validated).
+- Deleting an overquest deletes all subquests that exclusively belong to it. Subquests also referenced by quests outside the line are preserved.
+- Inserting a new quest into the network re-links predecessors (standard linked-list insertion).
+- Deleting a quest from the network reassigns its predecessors to point to its successors (dependency reassignment).
+- Quests can be reassigned to a different position in the network.
+- The active quest list (quest screen) filters out overquests and shows a `[QuestLine]` tag for subquests.
+
+## Quest editor
+- A dedicated "Quest Editor" screen accessible from the main menu manages quest lines.
+- Modes: browse overquests, view subquests of an overquest, create overquest, add subquest, edit dependencies, apply premade template.
+- The editor supports creating overquests, adding/removing subquests, and toggling next_quests dependencies between subquests.
+- A bank of premade quest tree templates is available at `definitions/premade_quests.json`. Selecting a template auto-generates the overquest and all its subquests with proper dependency linking.
+- Premade templates: Fitness Foundation, Knowledge Seeker, Social Butterfly, Daily Discipline, Creative Sprint.
+
 # Items design
 - Items are earned through quest completion, and rolled randomly from a list. Items have ascii sprites, and item rank in {normal, uncommon, rare, epic, legendary} with sprite colours in {white, green, blue, yellow, red}.
 - Item rarity drop weights: normal 50%, uncommon 25%, rare 15%, epic 8%, legendary 2%. Higher quest difficulty shifts odds toward rarer items (bonus per tier = tier_index * difficulty * 0.03).
@@ -63,6 +83,7 @@ This is a TUI RPG for real life, so anyone can create a character, define their 
 - definitions/items.json — General items listing their names, slots, and sprite paths.
 - definitions/weapons.json — Weapons listing their names and sprite paths.
 - definitions/armour.json — Armour listing their names, slots, and sprite paths.
+- definitions/premade_quests.json — Premade quest tree templates (overquest + subquests with dependency refs).
 - definitions/stat_tables_male.json — Male age bracket mapping to base stats.
 - definitions/stat_tables_female.json — Female age bracket mapping to base stats.
 - assets/portraits/ — ASCII character portraits (.txt files).
@@ -104,9 +125,10 @@ x-lrpg/
 │   │   ├── help_screen.py          # "?" overlay with key bindings
 │   │   ├── character_select.py     # Character selection at launch
 │   │   ├── character_create.py     # Character creation flow
-│   │   ├── main_menu.py            # Main menu (Stats/Quests/Inventory)
+│   │   ├── main_menu.py            # Main menu (Stats/Quests/Quest Editor/Inventory)
 │   │   ├── stats_screen.py         # Stat viewing with XP bars
 │   │   ├── quest_screen.py         # Quest list, creation, start, complete, pause
+│   │   ├── quest_editor.py         # Quest editor: overquests, subquests, dependencies, templates
 │   │   ├── inventory_screen.py     # Item viewing, equip/unequip
 │   │   └── fzf_picker.py           # FZF integration + built-in fallback
 │   ├── models/
@@ -120,7 +142,7 @@ x-lrpg/
 │   │   ├── experience.py           # XP formulas (required, granted, penalty)
 │   │   ├── leveling.py             # Level and rank-up logic
 │   │   ├── item_roller.py          # Random item generation
-│   │   ├── quest_engine.py         # Quest start/complete/fail logic
+│   │   ├── quest_engine.py         # Quest start/complete/fail + network graph logic
 │   │   └── scheduler.py            # Recurring quest failure detection
 │   ├── db/
 │   │   ├── __init__.py
@@ -153,6 +175,7 @@ x-lrpg/
     ├── items.json
     ├── weapons.json
     ├── armour.json
+    ├── premade_quests.json         # Premade quest tree templates for quest editor
     ├── stat_tables_male.json
     └── stat_tables_female.json
 ```
@@ -169,17 +192,19 @@ x-lrpg/
 | q | Quit application |
 | ? | Toggle help overlay |
 | / | Search (in lists) |
-| n | New (character or quest) |
-| d | Delete (character, quest from active or completed list) |
+| n | New (character, quest, or overquest) |
+| d | Delete (character, quest, overquest, subquest) |
 | s | Start quest |
 | c | Complete quest |
 | p | Pause/unpause quest (non-recurring only) |
+| t | Browse premade templates (quest editor) |
+| a | Add subquest (quest editor view mode) |
+| e | Edit dependencies (quest editor) / Switch to equipped tab (inventory) |
 | Tab | Next field (form) / Switch tabs (lists) |
 | Shift-Tab | Previous field (form) |
-| e | Switch to equipped tab (inventory) |
 | b | Switch to backpack tab (inventory) |
 | r | Rank up (stats screen) |
-| Space | Toggle selection (stats in quest form, recurrence cycle) |
+| Space | Toggle selection (stats in quest form, recurrence cycle, dependency toggle) |
 | Ctrl+C | Force quit |
 
 # AGENT: Implementation guidance
