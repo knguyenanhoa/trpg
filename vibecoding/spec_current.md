@@ -93,6 +93,31 @@ This is a TUI RPG for real life, so anyone can create a character, define their 
 - Selling an item removes it from inventory and adds its value to the character's coin balance.
 - Equipped items can also be sold (they are unequipped and removed).
 
+# Factions design
+- Factions mirror real-life organizations. They have their own quest lines, award relics, and track quest completions.
+- Factions are per-character, created and managed in the Faction Editor (accessible from main menu).
+- Factions cannot be deleted, only deactivated (hidden). They can be restored at any time.
+- Factions track the number of quests completed for them (`quests_completed` counter, incremented on each faction quest completion).
+- When creating a quest template in the Quest Editor, a faction can optionally be assigned. Both overquests and individual quests can belong to a faction.
+- Faction quests and overquests are displayed in purple (magenta) with a ♦ marker in the quest screen.
+- When a faction overquest is completed, it is **guaranteed to drop a relic**.
+- Optionally, specific $CS stats can be specified for the relic drop when creating a faction overquest template (`relic_stats` field). If not specified, random stats are chosen.
+
+## Relics
+- Relics are faction-specific items that award **character stats ($CS)**, not item stats ($IS).
+- Relics have high stat modifiers (base 3-10, scaled by overquest difficulty up to 2.5x).
+- Relics **cannot be sold or deleted**.
+- Relics **do not need to be equipped** — they are always active.
+- Relics are stored separately from regular items (`relics.json` per character).
+- Relics are displayed in a dedicated "Relics" tab in the inventory screen, rendered in purple/magenta.
+
+## Faction editor
+- Accessible from the main menu ("Factions" option).
+- Displays active and inactive factions in separate tabs.
+- Create new factions with name and description.
+- Deactivate factions (press 'd' on active tab) — hides them but preserves data.
+- Restore factions (press 'r' on inactive tab) — makes them active again.
+
 # Required files and folders
 - definitions/ranks.json — Player rank list with $IS thresholds.
 - definitions/items.json — General items listing their names, slots, and sprite paths.
@@ -103,7 +128,7 @@ This is a TUI RPG for real life, so anyone can create a character, define their 
 - definitions/stat_tables_female.json — Female age bracket mapping to base stats.
 - assets/portraits/ — ASCII character portraits (.txt files).
 - assets/items/ — ASCII item sprites (.txt files).
-- db/ — Runtime data, organized per character (db/characters/{name}/). Contains character.json, quests.json, quest_log.json, inventory.json, active_quests.json, completed_quests.json, quest_templates.json per character.
+- db/ — Runtime data, organized per character (db/characters/{name}/). Contains character.json, quests.json, quest_log.json, inventory.json, active_quests.json, completed_quests.json, quest_templates.json, factions.json, relics.json per character.
 - db/config.json — Global configuration (timezone, last_played character).
 
 # Architecture and required tech stack
@@ -140,17 +165,20 @@ x-lrpg/
 │   │   ├── help_screen.py          # "?" overlay with key bindings
 │   │   ├── character_select.py     # Character selection at launch
 │   │   ├── character_create.py     # Character creation flow
-│   │   ├── main_menu.py            # Main menu (Stats/Quests/Quest Editor/Inventory)
+│   │   ├── main_menu.py            # Main menu (Stats/Quests/Quest Editor/Factions/Inventory)
 │   │   ├── stats_screen.py         # Stat viewing with XP bars
 │   │   ├── quest_screen.py         # Quest list, creation, start, complete, pause
 │   │   ├── quest_editor.py         # Quest template manager: create, edit, instantiate templates
-│   │   ├── inventory_screen.py     # Item viewing, equip/unequip
+│   │   ├── faction_editor.py      # Faction manager: create, deactivate, restore factions
+│   │   ├── inventory_screen.py     # Item viewing, equip/unequip, relics tab
 │   │   └── fzf_picker.py           # FZF integration + built-in fallback
 │   ├── models/
 │   │   ├── __init__.py
 │   │   ├── character.py            # Character data model
 │   │   ├── quest.py                # Quest and QuestLogEntry models
 │   │   ├── item.py                 # Item model
+│   │   ├── faction.py              # Faction model
+│   │   ├── relic.py                # Relic model (faction CS rewards)
 │   │   └── stats.py                # CharacterStats and ItemStats classes
 │   ├── engine/
 │   │   ├── __init__.py
@@ -158,6 +186,7 @@ x-lrpg/
 │   │   ├── leveling.py             # Level and rank-up logic
 │   │   ├── item_roller.py          # Random item generation
 │   │   ├── quest_engine.py         # Quest start/complete/fail + network graph logic
+│   │   ├── relic_roller.py         # Relic generation for faction overquest completion
 │   │   └── scheduler.py            # Recurring quest failure detection
 │   ├── db/
 │   │   ├── __init__.py
@@ -183,6 +212,8 @@ x-lrpg/
 │           ├── quests.json
 │           ├── quest_log.json
 │           ├── quest_templates.json
+│           ├── factions.json
+│           ├── relics.json
 │           ├── inventory.json
 │           ├── active_quests.json
 │           └── completed_quests.json
@@ -230,4 +261,3 @@ x-lrpg/
 - Only external dependency: blessed==1.20.0. Use stdlib for everything else (json, os, uuid, random, hashlib, datetime).
 - Use `t.attr + "text" + t.normal` pattern for blessed formatting (not `t.attr("text")` which throws TypeError).
 - Remember that this is a work in progress so expect it to be iteratively improved. Set things up accordingly.
-- Do not modify vibecoding/spec.md or vibecoding/spec_v2.md.

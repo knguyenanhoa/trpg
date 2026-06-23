@@ -15,6 +15,7 @@ from app.config import CS_STATS, DIFFICULTY_MIN, DIFFICULTY_MAX
 from app.db.file_store import (
     load_quest_templates, save_quest_templates,
     load_premade_quest_templates, load_quests, save_quests,
+    load_factions,
 )
 from app.utils.sanitize import validate_name, sanitize_name, validate_float
 from app.utils.time_utils import now_iso
@@ -63,9 +64,16 @@ class QuestEditorScreen(BaseScreen):
     def _reset_template_form(self):
         self.tpl_fields = {"name": "", "description": "", "difficulty": "2.0"}
         self.tpl_stat_toggles = [False] * len(CS_STATS)
-        self.tpl_field_order = ["name", "difficulty", "stats", "description"]
+        self.tpl_field_order = ["name", "difficulty", "stats", "faction", "relic_stats", "description"]
         self.tpl_cursor = 0
         self.tpl_stat_cursor = 0
+        # Faction selection state
+        self._factions = load_factions(self.character.name)
+        self._active_factions = [f for f in self._factions if f.active]
+        self.tpl_faction_idx = 0  # 0 = "None", 1..N = faction indices
+        # Relic stat toggles (which CS stats the relic will boost)
+        self.tpl_relic_toggles = [False] * len(CS_STATS)
+        self.tpl_relic_cursor = 0
 
     def _reset_subquest_form(self):
         self.sq_fields = {"name": "", "description": "", "difficulty": "1.0"}
@@ -210,6 +218,41 @@ class QuestEditorScreen(BaseScreen):
                         sp = t.cyan + "> " + t.normal if j == stat_cursor else "  "
                         print(t.move_xy(6, current_y) + f"{sp}{mark} {stat.upper()}" + t.clear_eol, end="")
                         current_y += 1
+            elif field == "faction":
+                # Faction picker — vertical list like stats
+                options = ["None"] + [f.name for f in self._active_factions]
+                current_faction = options[self.tpl_faction_idx] if self.tpl_faction_idx < len(options) else "None"
+                display = t.magenta + current_faction + t.normal if self.tpl_faction_idx > 0 else current_faction
+                print(t.move_xy(2, current_y) + f"{prefix}Faction: {display}" + t.clear_eol, end="")
+                current_y += 1
+                if is_active:
+                    for fi, opt in enumerate(options):
+                        if fi == self.tpl_faction_idx:
+                            mark = t.magenta + "(●)" + t.normal
+                        else:
+                            mark = "( )"
+                        sp = t.cyan + "> " + t.normal if fi == self.tpl_faction_idx else "  "
+                        color = t.magenta if fi > 0 else ""
+                        reset = t.normal if fi > 0 else ""
+                        print(t.move_xy(6, current_y) + f"{sp}{mark} {color}{opt}{reset}" + t.clear_eol, end="")
+                        current_y += 1
+            elif field == "relic_stats":
+                # Only show if a faction is selected
+                if self.tpl_faction_idx > 0:
+                    selected = [CS_STATS[j] for j, v in enumerate(self.tpl_relic_toggles) if v]
+                    display = (", ".join(s.upper() for s in selected)
+                               if selected else t.dim + "(optional)" + t.normal)
+                    print(t.move_xy(2, current_y) + f"{prefix}Relic stats: {display}" + t.clear_eol, end="")
+                    current_y += 1
+                    if is_active:
+                        for j, stat in enumerate(CS_STATS):
+                            mark = t.green + "[x]" + t.normal if self.tpl_relic_toggles[j] else "[ ]"
+                            sp = t.cyan + "> " + t.normal if j == self.tpl_relic_cursor else "  "
+                            print(t.move_xy(6, current_y) + f"{sp}{mark} {stat.upper()}" + t.clear_eol, end="")
+                            current_y += 1
+                else:
+                    print(t.move_xy(2, current_y) + f"{prefix}" + t.dim + "Relic stats: (select a faction first)" + t.normal + t.clear_eol, end="")
+                    current_y += 1
             elif field == "description":
                 val = fields["description"]
                 cc = "█" if is_active else ""
@@ -384,6 +427,22 @@ class QuestEditorScreen(BaseScreen):
                 setattr(self, stat_cursor_attr, max(stat_cursor - 1, 0))
             elif key == " ":
                 stat_toggles[getattr(self, stat_cursor_attr)] = not stat_toggles[getattr(self, stat_cursor_attr)]
+        elif current_field == "faction":
+            max_idx = len(self._active_factions)  # 0=None, 1..N=factions
+            if key == "j" or key.code == t.KEY_DOWN:
+                self.tpl_faction_idx = min(self.tpl_faction_idx + 1, max_idx)
+            elif key == "k" or key.code == t.KEY_UP:
+                self.tpl_faction_idx = max(self.tpl_faction_idx - 1, 0)
+            elif key == " ":
+                # Space cycles forward (wraps)
+                self.tpl_faction_idx = (self.tpl_faction_idx + 1) % (max_idx + 1)
+        elif current_field == "relic_stats":
+            if key == "j" or key.code == t.KEY_DOWN:
+                self.tpl_relic_cursor = min(self.tpl_relic_cursor + 1, len(CS_STATS) - 1)
+            elif key == "k" or key.code == t.KEY_UP:
+                self.tpl_relic_cursor = max(self.tpl_relic_cursor - 1, 0)
+            elif key == " ":
+                self.tpl_relic_toggles[self.tpl_relic_cursor] = not self.tpl_relic_toggles[self.tpl_relic_cursor]
 
     def _handle_edit_deps_key(self, key):
         t = self.term
@@ -445,6 +504,16 @@ class QuestEditorScreen(BaseScreen):
             self.message = "Select at least one stat."
             return
 
+        # Resolve faction
+        faction_id = None
+        if self.tpl_faction_idx > 0 and self.tpl_faction_idx <= len(self._active_factions):
+            faction_id = self._active_factions[self.tpl_faction_idx - 1].id
+
+        # Relic stats (only meaningful if faction is set)
+        relic_stats = []
+        if faction_id:
+            relic_stats = [CS_STATS[i] for i, v in enumerate(self.tpl_relic_toggles) if v]
+
         template = {
             "name": name,
             "description": self.tpl_fields["description"],
@@ -453,6 +522,8 @@ class QuestEditorScreen(BaseScreen):
                 "description": self.tpl_fields["description"],
                 "difficulty": difficulty,
                 "stats": stats,
+                "faction_id": faction_id,
+                "relic_stats": relic_stats,
             },
             "quests": [],
         }
@@ -606,6 +677,8 @@ class QuestEditorScreen(BaseScreen):
             active=True,
             is_overquest=True,
             status="new",
+            faction_id=oq_data.get("faction_id"),
+            relic_stats=oq_data.get("relic_stats", []),
         )
         quests.append(overquest)
 
@@ -629,6 +702,7 @@ class QuestEditorScreen(BaseScreen):
                 overquest_id=overquest.id,
                 next_quests=[],
                 status="new",
+                faction_id=oq_data.get("faction_id"),
             )
             quest_objects.append(sq)
 

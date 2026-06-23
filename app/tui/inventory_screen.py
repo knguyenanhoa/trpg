@@ -4,8 +4,9 @@ from app.tui.base_screen import BaseScreen
 from app.tui.fzf_picker import InlinePicker
 from app.models.character import Character
 from app.models.item import Item
+from app.models.relic import Relic
 from app.config import EQUIPMENT_SLOTS
-from app.db.file_store import load_inventory, save_inventory, save_character
+from app.db.file_store import load_inventory, save_inventory, save_character, load_relics
 from app.utils.colors import RARITY_COLORS
 from app.engine.economy import item_value
 
@@ -17,7 +18,8 @@ class InventoryScreen(BaseScreen):
         super().__init__()
         self.character = character
         self.items = load_inventory(character.name)
-        self.mode = "equipped"  # equipped, backpack
+        self.relics = load_relics(character.name)
+        self.mode = "equipped"  # equipped, backpack, relics
         self.cursor = 0
         self.message = ""
 
@@ -46,16 +48,26 @@ class InventoryScreen(BaseScreen):
 
         # Tab indicator
         if self.mode == "equipped":
-            print(t.move_xy(2, 4) + t.bold + "[E]quipped" + t.normal + "  " + t.dim + "[B]ackpack" + t.normal, end="")
+            print(t.move_xy(2, 4) + t.bold + "[E]quipped" + t.normal + "  " +
+                  t.dim + "[B]ackpack" + t.normal + "  " +
+                  t.dim + "[R]elics" + t.normal, end="")
+        elif self.mode == "backpack":
+            print(t.move_xy(2, 4) + t.dim + "[E]quipped" + t.normal + "  " +
+                  t.bold + "[B]ackpack" + t.normal + "  " +
+                  t.dim + "[R]elics" + t.normal, end="")
         else:
-            print(t.move_xy(2, 4) + t.dim + "[E]quipped" + t.normal + "  " + t.bold + "[B]ackpack" + t.normal, end="")
+            print(t.move_xy(2, 4) + t.dim + "[E]quipped" + t.normal + "  " +
+                  t.dim + "[B]ackpack" + t.normal + "  " +
+                  t.bold + "[R]elics" + t.normal, end="")
 
         if self.mode == "equipped":
             self._render_equipped()
-        else:
+        elif self.mode == "backpack":
             self._render_backpack()
+        elif self.mode == "relics":
+            self._render_relics()
 
-        controls = "Tab/e/b:switch  Enter:equip/unequip  s:sell  Esc:back  ?:help"
+        controls = "Tab/e/b/r:switch  Enter:equip/unequip  s:sell  Esc:back  ?:help"
         print(t.move_xy(2, t.height - 1) + t.dim + controls + t.normal, end="")
 
     def _render_equipped(self):
@@ -98,6 +110,33 @@ class InventoryScreen(BaseScreen):
         if self.cursor < len(backpack):
             self._render_item_stats(backpack[self.cursor], y + len(backpack) + 2)
 
+    def _render_relics(self):
+        """Render the relics tab in purple."""
+        t = self.term
+        y = 6
+        if not self.relics:
+            print(t.move_xy(2, y) + t.dim + "No relics acquired yet." + t.normal, end="")
+            return
+        for i, relic in enumerate(self.relics):
+            prefix = " > " if i == self.cursor else "   "
+            boost_str = ", ".join(f"{s}+{v}" for s, v in relic.stat_boosts.items())
+            line = (f"{prefix}" + t.magenta + f"♦ {relic.name}" + t.normal +
+                    f" [{relic.faction_name}] ({boost_str})")
+            print(t.move_xy(2, y + i) + line, end="")
+
+        # Show selected relic details
+        if self.cursor < len(self.relics):
+            relic = self.relics[self.cursor]
+            detail_y = y + len(self.relics) + 2
+            print(t.move_xy(2, detail_y) + t.bold + t.magenta +
+                  f"  ♦ {relic.name}" + t.normal, end="")
+            print(t.move_xy(2, detail_y + 1) + t.dim +
+                  f"  {relic.description}" + t.normal, end="")
+            stat_parts = []
+            for stat, v in relic.stat_boosts.items():
+                stat_parts.append(t.magenta + f"{stat.upper()}:+{v:.1f}" + t.normal)
+            print(t.move_xy(2, detail_y + 2) + "  " + "  ".join(stat_parts), end="")
+
     def _render_item_stats(self, item: Item, y: int):
         t = self.term
         val = item_value(item)
@@ -125,7 +164,12 @@ class InventoryScreen(BaseScreen):
 
         # Tab switching
         if key == "\t":
-            self.mode = "backpack" if self.mode == "equipped" else "equipped"
+            if self.mode == "equipped":
+                self.mode = "backpack"
+            elif self.mode == "backpack":
+                self.mode = "relics"
+            else:
+                self.mode = "equipped"
             self.cursor = 0
             return
         if key == "e":
@@ -134,6 +178,10 @@ class InventoryScreen(BaseScreen):
             return
         if key == "b":
             self.mode = "backpack"
+            self.cursor = 0
+            return
+        if key == "r":
+            self.mode = "relics"
             self.cursor = 0
             return
 
@@ -154,10 +202,15 @@ class InventoryScreen(BaseScreen):
     def _max_cursor(self) -> int:
         if self.mode == "equipped":
             return len(EQUIPMENT_SLOTS)
+        elif self.mode == "relics":
+            return max(1, len(self.relics))
         return max(1, len(self._backpack_items()))
 
     def _sell_item(self):
         """Sell the currently selected item for coins."""
+        if self.mode == "relics":
+            self.message = "Relics cannot be sold."
+            return
         if self.mode == "equipped":
             slot = EQUIPMENT_SLOTS[self.cursor]
             equipped = self._equipped_items()
@@ -184,6 +237,9 @@ class InventoryScreen(BaseScreen):
             self.cursor = max(0, max_items - 1)
 
     def _toggle_equip(self):
+        if self.mode == "relics":
+            self.message = "Relics are always active — no equipping needed."
+            return
         if self.mode == "equipped":
             slot = EQUIPMENT_SLOTS[self.cursor]
             equipped = self._equipped_items()

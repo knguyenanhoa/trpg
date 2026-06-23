@@ -234,5 +234,61 @@
       "wis"
     ],
     "item_dropped": "3cf610d8-d7f6-4c95-816f-3e5ddca44c21"
+  },
+  {
+    "quest_id": "b3882d1d-e192-465b-b19b-60f2a9d3d1e5",
+    "quest_name": "faction subquest",
+    "status": "completed",
+    "started_at": "2026-06-24T04:52:53.428311+07:00",
+    "completed_at": "2026-06-24T04:52:55.465595+07:00",
+    "duration_seconds": 2,
+    "xp_granted": 10,
+    "stats_affected": [
+      "int",
+      "wis"
+    ],
+    "item_dropped": "23ae6228-d27c-479a-86ff-bc784cc3dd7e"
+  },
+  {
+    "quest_id": "d90684a8-1351-4599-a31b-d72a70a0f2a8",
+    "quest_name": "test faction quest",
+    "status": "completed",
+    "started_at": "2026-06-24T04:51:34.725563+07:00",
+    "completed_at": "2026-06-24T04:52:55.474341+07:00",
+    "duration_seconds": 0,
+    "xp_granted": 120.0,
+    "stats_affected": [
+      "int",
+      "wis"
+    ],
+    "item_dropped": "1e852881-daba-4404-9a53-2248bbf12210"
+  },
+  {
+    "quest_id": "b38e0919-a7cf-4f41-8a3c-b6b59e34e265",
+    "quest_name": "faction subquest",
+    "status": "completed",
+    "started_at": "2026-06-24T05:00:48.666443+07:00",
+    "completed_at": "2026-06-24T05:03:45.522293+07:00",
+    "duration_seconds": 176,
+    "xp_granted": 10,
+    "stats_affected": [
+      "int",
+      "wis"
+    ],
+    "item_dropped": null
+  },
+  {
+    "quest_id": "0878ae98-fd4b-44f0-a951-bdfcd4175c3e",
+    "quest_name": "test faction quest",
+    "status": "completed",
+    "started_at": "2026-06-24T05:00:39.425632+07:00",
+    "completed_at": "2026-06-24T05:03:45.527488+07:00",
+    "duration_seconds": 0,
+    "xp_granted": 120.0,
+    "stats_affected": [
+      "int",
+      "wis"
+    ],
+    "item_dropped": "4781da36-1344-4957-9c8b-bc97e7bf3ae0"
   }
 ]

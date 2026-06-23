@@ -16,7 +16,9 @@
     "next_quests": [
       "cfc628d1-e7e1-4e77-8c42-7e7377aa59c0"
     ],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
   },
   {
     "id": "cfc628d1-e7e1-4e77-8c42-7e7377aa59c0",
@@ -37,7 +39,9 @@
       "7b3a235c-082c-4e6c-bcd3-538300c0bf5f",
       "bfea4a49-8883-47a5-a5e6-e4f7b59e871e"
     ],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
   },
   {
     "id": "7b3a235c-082c-4e6c-bcd3-538300c0bf5f",
@@ -57,7 +61,9 @@
     "next_quests": [
       "c3215743-dda7-41fd-92a0-cd7bf40118a3"
     ],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
   },
   {
     "id": "bfea4a49-8883-47a5-a5e6-e4f7b59e871e",
@@ -77,7 +83,9 @@
     "next_quests": [
       "c3215743-dda7-41fd-92a0-cd7bf40118a3"
     ],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
   },
   {
     "id": "c3215743-dda7-41fd-92a0-cd7bf40118a3",
@@ -95,7 +103,9 @@
     "is_overquest": false,
     "overquest_id": "726db700-f126-4547-bbca-8fe4f26816e0",
     "next_quests": [],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
   },
   {
     "id": "58bd2589-f44e-4713-adfd-7c3614244361",
@@ -114,7 +124,9 @@
     "next_quests": [
       "ed863c77-d14a-4dd8-8d14-9fbc0a65811f"
     ],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
   },
   {
     "id": "ed863c77-d14a-4dd8-8d14-9fbc0a65811f",
@@ -135,7 +147,9 @@
       "d06c91d5-370e-47bd-bfa7-0d98b82e2553",
       "250dd3b2-0250-4cf1-8451-69ca4237d836"
     ],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
   },
   {
     "id": "d06c91d5-370e-47bd-bfa7-0d98b82e2553",
@@ -155,7 +169,9 @@
     "next_quests": [
       "3f03cea4-2e29-48fc-b520-0bbf46971969"
     ],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
   },
   {
     "id": "250dd3b2-0250-4cf1-8451-69ca4237d836",
@@ -175,7 +191,9 @@
     "next_quests": [
       "3f03cea4-2e29-48fc-b520-0bbf46971969"
     ],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
   },
   {
     "id": "3f03cea4-2e29-48fc-b520-0bbf46971969",
@@ -193,7 +211,9 @@
     "is_overquest": false,
     "overquest_id": "ca400715-825a-48e6-93bc-726f2c5ec6c1",
     "next_quests": [],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
   },
   {
     "id": "9fbcae47-c801-446a-b81a-9bd4cf325625",
@@ -212,7 +232,9 @@
     "next_quests": [
       "93007fac-f4b9-417f-8258-47bcbd410e9f"
     ],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
   },
   {
     "id": "93007fac-f4b9-417f-8258-47bcbd410e9f",
@@ -232,7 +254,9 @@
     "next_quests": [
       "bbc47248-86d6-428f-94c7-f8c35f7616bc"
     ],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
   },
   {
     "id": "bbc47248-86d6-428f-94c7-f8c35f7616bc",
@@ -251,7 +275,9 @@
     "is_overquest": false,
     "overquest_id": "fa3d1b42-27bd-4e62-a071-e2e526f90c96",
     "next_quests": [],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
   },
   {
     "id": "9c1d4155-bc3b-477a-a46f-1ef961ee2524",
@@ -270,7 +296,9 @@
     "next_quests": [
       "f4e9a51e-9145-41f2-b608-0ac94b158c21"
     ],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
   },
   {
     "id": "f4e9a51e-9145-41f2-b608-0ac94b158c21",
@@ -290,7 +318,9 @@
     "next_quests": [
       "c04b69e2-d009-460a-9992-39974bc411c6"
     ],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
   },
   {
     "id": "c04b69e2-d009-460a-9992-39974bc411c6",
@@ -309,7 +339,9 @@
     "is_overquest": false,
     "overquest_id": "b8a64e9c-4119-4b0e-b622-adc721fbc0f3",
     "next_quests": [],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
   },
   {
     "id": "b8a64e9c-4119-4b0e-b622-adc721fbc0f3",
@@ -327,6 +359,51 @@
     "is_overquest": true,
     "overquest_id": null,
     "next_quests": [],
-    "status": "completed"
+    "status": "completed",
+    "faction_id": null,
+    "relic_stats": []
+  },
+  {
+    "id": "b38e0919-a7cf-4f41-8a3c-b6b59e34e265",
+    "name": "faction subquest",
+    "description": "",
+    "difficulty": 1.0,
+    "stats": [
+      "int",
+      "wis"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-24T05:00:39.425999+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "0878ae98-fd4b-44f0-a951-bdfcd4175c3e",
+    "next_quests": [],
+    "status": "completed",
+    "faction_id": "cbe061a6-47ef-4ceb-bc5a-7feff9a1f862",
+    "relic_stats": []
+  },
+  {
+    "id": "0878ae98-fd4b-44f0-a951-bdfcd4175c3e",
+    "name": "test faction quest",
+    "description": "",
+    "difficulty": 2.0,
+    "stats": [
+      "int",
+      "wis"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-24T05:00:39.425632+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": true,
+    "overquest_id": null,
+    "next_quests": [],
+    "status": "completed",
+    "faction_id": "cbe061a6-47ef-4ceb-bc5a-7feff9a1f862",
+    "relic_stats": [
+      "int",
+      "wis"
+    ]
   }
 ]

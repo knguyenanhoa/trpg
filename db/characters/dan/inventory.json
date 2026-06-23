@@ -14,7 +14,7 @@
     },
     "sprite": "assets/items/cloth_hood.txt",
     "acquired_at": "2026-06-23T13:23:50.083195+07:00",
-    "equipped": false
+    "equipped": true
   },
   {
     "id": "9c6e0352-20f8-434f-aa95-5a469a79e522",
@@ -31,7 +31,7 @@
     },
     "sprite": "assets/items/spell_tome.txt",
     "acquired_at": "2026-06-23T13:24:06.029717+07:00",
-    "equipped": false
+    "equipped": true
   },
   {
     "id": "1edb5832-8fde-491f-8a5f-be65896fd2cb",
@@ -48,7 +48,7 @@
     },
     "sprite": "assets/items/leather_leggings.txt",
     "acquired_at": "2026-06-23T13:24:08.296170+07:00",
-    "equipped": false
+    "equipped": true
   },
   {
     "id": "488bbc7d-760c-405b-b0b8-d8af133b71f1",
@@ -150,6 +150,57 @@
     },
     "sprite": "assets/items/steel_helm.txt",
     "acquired_at": "2026-06-23T13:41:36.215849+07:00",
+    "equipped": false
+  },
+  {
+    "id": "23ae6228-d27c-479a-86ff-bc784cc3dd7e",
+    "name": "Leather Vest",
+    "slot": "chest",
+    "rarity": "uncommon",
+    "stats": {
+      "istr": -5.5,
+      "idex": -6.2,
+      "icon": -5.6,
+      "iint": -1.9,
+      "iwis": 11,
+      "icha": 1.5
+    },
+    "sprite": "assets/items/leather_vest.txt",
+    "acquired_at": "2026-06-24T04:52:55.468700+07:00",
+    "equipped": false
+  },
+  {
+    "id": "1e852881-daba-4404-9a53-2248bbf12210",
+    "name": "Cloth Hood",
+    "slot": "head",
+    "rarity": "legendary",
+    "stats": {
+      "istr": 11,
+      "idex": 9.4,
+      "icon": -2.1,
+      "iint": -1.3,
+      "iwis": 5.4,
+      "icha": -2.3
+    },
+    "sprite": "assets/items/cloth_hood.txt",
+    "acquired_at": "2026-06-24T04:52:55.474598+07:00",
+    "equipped": false
+  },
+  {
+    "id": "4781da36-1344-4957-9c8b-bc97e7bf3ae0",
+    "name": "Rapier",
+    "slot": "weapon",
+    "rarity": "legendary",
+    "stats": {
+      "istr": -4.6,
+      "idex": -3.8,
+      "icon": -1.5,
+      "iint": 6.9,
+      "iwis": 5.8,
+      "icha": -1.9
+    },
+    "sprite": "assets/items/rapier.txt",
+    "acquired_at": "2026-06-24T05:03:45.529089+07:00",
     "equipped": false
   }
 ]

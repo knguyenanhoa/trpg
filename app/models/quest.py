@@ -37,6 +37,9 @@ class Quest:
     overquest_id: Optional[str] = None
     next_quests: list[str] = field(default_factory=list)
     status: str = "new"
+    # Faction fields
+    faction_id: Optional[str] = None  # If set, this quest belongs to a faction
+    relic_stats: list[str] = field(default_factory=list)  # CS stats for relic drop (overquests only)
 
     def __post_init__(self):
         """Enforce invariants: subquests cannot be recurring."""
@@ -63,6 +66,8 @@ class Quest:
             "overquest_id": self.overquest_id,
             "next_quests": self.next_quests,
             "status": self.status,
+            "faction_id": self.faction_id,
+            "relic_stats": self.relic_stats,
         }
 
     @classmethod
@@ -82,6 +87,8 @@ class Quest:
             overquest_id=data.get("overquest_id"),
             next_quests=data.get("next_quests", []),
             status=data.get("status", "new"),
+            faction_id=data.get("faction_id"),
+            relic_stats=data.get("relic_stats", []),
         )
 
 

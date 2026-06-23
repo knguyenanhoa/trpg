@@ -18,12 +18,13 @@ from app.db.file_store import (
     load_quests, save_quests, load_active_quests, save_active_quests,
     save_character, append_quest_log, load_inventory, save_inventory,
     load_completed_quests, save_completed_quests, load_quest_log,
-    load_quest_templates,
+    load_quest_templates, load_factions, save_factions, load_relics, save_relics,
 )
 from app.engine.quest_engine import (
     start_quest, complete_quest, check_overquest_completion,
     complete_overquest, get_quest_by_id, get_subquests, get_predecessors,
 )
+from app.engine.relic_roller import roll_relic
 from app.utils.sanitize import validate_name, sanitize_name, validate_float
 from app.utils.time_utils import (
     now_iso, now, start_of_day, end_of_day,
@@ -68,10 +69,14 @@ class QuestScreen(BaseScreen):
             "recurrence": "none",
         }
         self.create_stat_toggles = [False] * len(CS_STATS)
-        self.create_field_order = ["name", "difficulty", "recurrence", "stats", "description"]
+        self.create_field_order = ["name", "difficulty", "recurrence", "stats", "faction", "description"]
         self.create_cursor = 0
         self.create_stat_cursor = 0
         self.create_recurrence_cursor = 0
+        # Faction selection for standalone quest creation
+        self._create_factions = load_factions(self.character.name)
+        self._create_active_factions = [f for f in self._create_factions if f.active]
+        self.create_faction_idx = 0  # 0 = None, 1..N = faction
 
     # --- Hierarchical list building ---
 
@@ -105,7 +110,8 @@ class QuestScreen(BaseScreen):
             done = sum(1 for s in subs if s.status == "completed")
             is_folded = oq.id in self.folded
             fold_icon = "▶" if is_folded else "▼"
-            items.append(f"{fold_icon} {oq.name} [{done}/{len(subs)}]")
+            faction_mark = "♦ " if oq.faction_id else ""
+            items.append(f"{fold_icon} {faction_mark}{oq.name} [{done}/{len(subs)}]")
             quests.append(oq)
 
             if not is_folded:
@@ -114,14 +120,16 @@ class QuestScreen(BaseScreen):
                         continue  # Skip completed one-time subquests in active tab
                     recur = f"({sq.recurrence})" if sq.recurrence != "none" else ""
                     status = self._status_icon(sq)
-                    items.append(f"    {status} {sq.name} — d:{sq.difficulty} {recur}")
+                    faction_mark = "♦ " if sq.faction_id else ""
+                    items.append(f"    {status} {faction_mark}{sq.name} — d:{sq.difficulty} {recur}")
                     quests.append(sq)
 
         # Render standalone quests
         for sq in standalone:
             recur = f"({sq.recurrence})" if sq.recurrence != "none" else ""
             status = self._status_icon(sq)
-            items.append(f"{status} {sq.name} — d:{sq.difficulty} {recur}")
+            faction_mark = "♦ " if sq.faction_id else ""
+            items.append(f"{status} {faction_mark}{sq.name} — d:{sq.difficulty} {recur}")
             quests.append(sq)
 
         items.append("+ New Quest")
@@ -163,12 +171,14 @@ class QuestScreen(BaseScreen):
 
             is_folded = oq.id in self.folded
             fold_icon = "▶" if is_folded else "▼"
-            items.append(f"{fold_icon} {oq.name} [completed]")
+            faction_mark = "♦ " if oq.faction_id else ""
+            items.append(f"{fold_icon} {faction_mark}{oq.name} [completed]")
             quests.append(oq)
 
             if not is_folded:
                 for sq in subs:
-                    items.append(f"    ● {sq.name} — d:{sq.difficulty}")
+                    faction_mark_sq = "♦ " if sq.faction_id else ""
+                    items.append(f"    ● {faction_mark_sq}{sq.name} — d:{sq.difficulty}")
                     quests.append(sq)
                     sub_ids_shown.add(sq.id)
 
@@ -290,12 +300,11 @@ class QuestScreen(BaseScreen):
                 self.picker.cursor = max(0, len(items) - 1)
         self.picker.render()
 
-        # Color indicators for active tab
-        if self.tab == "active":
-            self._render_status_colors()
+        # Color indicators for both tabs
+        self._render_status_colors()
 
     def _render_status_colors(self):
-        """Render color indicators next to quest entries in active tab."""
+        """Render color indicators and purple faction coloring on quest entries."""
         t = self.term
         if not self.picker:
             return
@@ -316,9 +325,17 @@ class QuestScreen(BaseScreen):
             if quest is None:
                 continue
             line_y = list_start_y + (i - visible_start)
-            indicator_x = 60
+            indicator_x = 62
+            is_selected = (i == self.picker.cursor)
+
+            # Re-render faction quest lines in purple (override picker's plain text)
+            if quest.faction_id and not is_selected:
+                item_text = self.picker.items[idx]
+                print(t.move_xy(self.picker.x, line_y) + t.magenta +
+                      f"   {item_text}" + t.normal + t.clear_eol, end="")
+
+            # Status indicators on the right
             if quest.is_overquest:
-                # Show overquest status
                 if quest.status == "completed":
                     print(t.move_xy(indicator_x, line_y) + t.green + "★ DONE" + t.normal, end="")
             else:
@@ -378,6 +395,23 @@ class QuestScreen(BaseScreen):
                               if j == self.create_stat_cursor else "  ")
                         print(t.move_xy(6, current_y) +
                               f"{sp}{mark} {stat.upper()}" + t.clear_eol, end="")
+                        current_y += 1
+            elif field == "faction":
+                options = ["None"] + [f.name for f in self._create_active_factions]
+                current_faction = options[self.create_faction_idx] if self.create_faction_idx < len(options) else "None"
+                display = t.magenta + current_faction + t.normal if self.create_faction_idx > 0 else current_faction
+                print(t.move_xy(2, current_y) + f"{prefix}Faction: {display}" + t.clear_eol, end="")
+                current_y += 1
+                if is_active:
+                    for fi, opt in enumerate(options):
+                        if fi == self.create_faction_idx:
+                            mark = t.magenta + "(●)" + t.normal
+                        else:
+                            mark = "( )"
+                        sp = t.cyan + "> " + t.normal if fi == self.create_faction_idx else "  "
+                        color = t.magenta if fi > 0 else ""
+                        reset = t.normal if fi > 0 else ""
+                        print(t.move_xy(6, current_y) + f"{sp}{mark} {color}{opt}{reset}" + t.clear_eol, end="")
                         current_y += 1
             elif field == "description":
                 val = self.create_fields["description"]
@@ -527,6 +561,14 @@ class QuestScreen(BaseScreen):
                 self.create_stat_toggles[self.create_stat_cursor] = (
                     not self.create_stat_toggles[self.create_stat_cursor]
                 )
+        elif current_field == "faction":
+            max_idx = len(self._create_active_factions)
+            if key == "j" or key.code == t.KEY_DOWN:
+                self.create_faction_idx = min(self.create_faction_idx + 1, max_idx)
+            elif key == "k" or key.code == t.KEY_UP:
+                self.create_faction_idx = max(self.create_faction_idx - 1, 0)
+            elif key == " ":
+                self.create_faction_idx = (self.create_faction_idx + 1) % (max_idx + 1)
 
     def _finalize_create(self):
         name = sanitize_name(self.create_fields["name"])
@@ -556,6 +598,8 @@ class QuestScreen(BaseScreen):
             recurrence=self.create_fields["recurrence"],
             created_at=now_iso(),
             active=True,
+            faction_id=(self._create_active_factions[self.create_faction_idx - 1].id
+                        if self.create_faction_idx > 0 else None),
         )
         self.quests.append(quest)
         save_quests(self.character.name, self.quests)
@@ -689,6 +733,28 @@ class QuestScreen(BaseScreen):
                 inventory.append(oq_item)
                 save_inventory(self.character.name, inventory)
                 msg += f" | Item: {oq_item.name} ({oq_item.rarity})"
+
+            # Faction overquest: guaranteed relic drop
+            if overquest.faction_id:
+                factions = load_factions(self.character.name)
+                faction = next((f for f in factions if f.id == overquest.faction_id), None)
+                faction_name = faction.name if faction else "Unknown"
+                relic = roll_relic(
+                    faction_id=overquest.faction_id,
+                    faction_name=faction_name,
+                    overquest_name=overquest.name,
+                    relic_stats=overquest.relic_stats or None,
+                    difficulty=overquest.difficulty,
+                )
+                relics = load_relics(self.character.name)
+                relics.append(relic)
+                save_relics(self.character.name, relics)
+                # Increment faction quest counter
+                if faction:
+                    faction.quests_completed += 1
+                    save_factions(self.character.name, factions)
+                boost_str = ", ".join(f"{s}+{v}" for s, v in relic.stat_boosts.items())
+                msg += f"\n  ♦ Relic: {relic.name} ({boost_str})"
 
         self.message = msg
         self.picker = None
@@ -835,6 +901,27 @@ class QuestScreen(BaseScreen):
             self._template_picker.filtered_indices = list(range(len(items)))
         self._template_picker.render()
 
+        # Color faction templates in purple
+        visible_start = self._template_picker.scroll_offset
+        visible_end = min(
+            visible_start + self._template_picker.max_visible,
+            len(self._template_picker.filtered_indices),
+        )
+        list_start_y = 6 + 2
+        for i in range(visible_start, visible_end):
+            if i >= len(self._template_picker.filtered_indices):
+                break
+            idx = self._template_picker.filtered_indices[i]
+            if idx >= len(self._templates):
+                break
+            tmpl = self._templates[idx]
+            if tmpl.get("overquest", {}).get("faction_id"):
+                line_y = list_start_y + (i - visible_start)
+                is_selected = (i == self._template_picker.cursor)
+                if not is_selected:
+                    print(t.move_xy(self._template_picker.x, line_y) + t.magenta +
+                          f"   ♦ {items[idx]}" + t.normal + t.clear_eol, end="")
+
     def _handle_template_key(self, key):
         """Handle keys in from_template mode."""
         t = self.term
@@ -868,6 +955,8 @@ class QuestScreen(BaseScreen):
             active=True,
             is_overquest=True,
             status="new",
+            faction_id=oq_data.get("faction_id"),
+            relic_stats=oq_data.get("relic_stats", []),
         )
         self.quests.append(overquest)
 
@@ -891,6 +980,7 @@ class QuestScreen(BaseScreen):
                 overquest_id=overquest.id,
                 next_quests=[],
                 status="new",
+                faction_id=oq_data.get("faction_id"),
             )
             quest_objects.append(sq)
 

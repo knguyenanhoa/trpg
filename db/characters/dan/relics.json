@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1621b84d-9634-4d2c-b78f-078ad6ebacb1",
+    "name": "test faction quest Relic",
+    "faction_id": "cbe061a6-47ef-4ceb-bc5a-7feff9a1f862",
+    "faction_name": "Cult of awe",
+    "stat_boosts": {
+      "int": 11.9,
+      "wis": 13.1
+    },
+    "description": "Awarded by Cult of awe for completing 'test faction quest'.",
+    "acquired_at": "2026-06-24T05:03:45.533083+07:00"
+  }
+]

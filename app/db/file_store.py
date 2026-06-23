@@ -8,6 +8,8 @@ from app.config import DB_PATH, DEFINITIONS_PATH
 from app.models.character import Character
 from app.models.quest import Quest, QuestLogEntry
 from app.models.item import Item
+from app.models.faction import Faction
+from app.models.relic import Relic
 from app.utils.sanitize import name_to_folder
 
 
@@ -158,6 +160,36 @@ def load_completed_quests(character_name: str) -> list[Quest]:
     path = os.path.join(_char_dir(character_name), "completed_quests.json")
     data = _read_json(path, default=[])
     return [Quest.from_dict(d) for d in data]
+
+
+# --- Faction operations ---
+
+def save_factions(character_name: str, factions: list[Faction]):
+    """Save factions for a character."""
+    path = os.path.join(_char_dir(character_name), "factions.json")
+    _atomic_write(path, [f.to_dict() for f in factions])
+
+
+def load_factions(character_name: str) -> list[Faction]:
+    """Load factions for a character."""
+    path = os.path.join(_char_dir(character_name), "factions.json")
+    data = _read_json(path, default=[])
+    return [Faction.from_dict(d) for d in data]
+
+
+# --- Relic operations ---
+
+def save_relics(character_name: str, relics: list[Relic]):
+    """Save relics for a character."""
+    path = os.path.join(_char_dir(character_name), "relics.json")
+    _atomic_write(path, [r.to_dict() for r in relics])
+
+
+def load_relics(character_name: str) -> list[Relic]:
+    """Load relics for a character."""
+    path = os.path.join(_char_dir(character_name), "relics.json")
+    data = _read_json(path, default=[])
+    return [Relic.from_dict(d) for d in data]
 
 
 # --- Global config ---

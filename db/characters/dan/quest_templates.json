@@ -330,5 +330,37 @@
         "next_quests": []
       }
     ]
+  },
+  {
+    "name": "test faction quest",
+    "description": "",
+    "overquest": {
+      "name": "test faction quest",
+      "description": "",
+      "difficulty": 2.0,
+      "stats": [
+        "int",
+        "wis"
+      ],
+      "faction_id": "cbe061a6-47ef-4ceb-bc5a-7feff9a1f862",
+      "relic_stats": [
+        "int",
+        "wis"
+      ]
+    },
+    "quests": [
+      {
+        "ref": "faction_subquest",
+        "name": "faction subquest",
+        "description": "",
+        "difficulty": 1.0,
+        "stats": [
+          "int",
+          "wis"
+        ],
+        "recurrence": "none",
+        "next_quests": []
+      }
+    ]
   }
 ]

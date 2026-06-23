@@ -15,6 +15,7 @@ class MainMenuScreen(BaseScreen):
         "Stats",
         "Quests",
         "Quest Editor",
+        "Factions",
         "Inventory",
         "Switch Character",
     ]
@@ -99,6 +100,9 @@ class MainMenuScreen(BaseScreen):
         elif choice == "Quest Editor":
             from app.tui.quest_editor import QuestEditorScreen
             self.manager.push(QuestEditorScreen(self.character))
+        elif choice == "Factions":
+            from app.tui.faction_editor import FactionEditorScreen
+            self.manager.push(FactionEditorScreen(self.character))
         elif choice == "Inventory":
             from app.tui.inventory_screen import InventoryScreen
             self.manager.push(InventoryScreen(self.character))

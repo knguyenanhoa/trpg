@@ -1,1 +1,86 @@
-[]
+[
+  {
+    "id": "aec5216e-eb54-451c-a1a4-e07bd6897d16",
+    "name": "Social Butterfly",
+    "description": "Develop your social confidence through progressive challenges.",
+    "difficulty": 3.0,
+    "stats": [
+      "cha",
+      "wis"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T14:31:39.329010+07:00",
+    "active": true,
+    "paused": false,
+    "is_overquest": true,
+    "overquest_id": null,
+    "next_quests": [],
+    "status": "new",
+    "faction_id": null,
+    "relic_stats": []
+  },
+  {
+    "id": "a903d195-764e-45c6-9c9f-c7fec1e83a17",
+    "name": "Say Hi to a Stranger",
+    "description": "Greet someone you don't know in a friendly way.",
+    "difficulty": 1.0,
+    "stats": [
+      "cha"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T14:31:39.329319+07:00",
+    "active": true,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "aec5216e-eb54-451c-a1a4-e07bd6897d16",
+    "next_quests": [
+      "e1f0a7cc-2bf9-409d-90cd-2da9e5080a81"
+    ],
+    "status": "in-progress",
+    "faction_id": null,
+    "relic_stats": []
+  },
+  {
+    "id": "e1f0a7cc-2bf9-409d-90cd-2da9e5080a81",
+    "name": "Have a 5-Minute Conversation",
+    "description": "Engage in a conversation lasting at least 5 minutes with someone new.",
+    "difficulty": 2.0,
+    "stats": [
+      "cha",
+      "wis"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T14:31:39.329346+07:00",
+    "active": true,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "aec5216e-eb54-451c-a1a4-e07bd6897d16",
+    "next_quests": [
+      "b279f5d3-1b57-4ce2-b37e-35365cb4cbb5"
+    ],
+    "status": "new",
+    "faction_id": null,
+    "relic_stats": []
+  },
+  {
+    "id": "b279f5d3-1b57-4ce2-b37e-35365cb4cbb5",
+    "name": "Plan a Group Activity",
+    "description": "Organize and lead a social gathering or group activity.",
+    "difficulty": 3.0,
+    "stats": [
+      "cha",
+      "wis",
+      "int"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T14:31:39.329365+07:00",
+    "active": true,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "aec5216e-eb54-451c-a1a4-e07bd6897d16",
+    "next_quests": [],
+    "status": "new",
+    "faction_id": null,
+    "relic_stats": []
+  }
+]
