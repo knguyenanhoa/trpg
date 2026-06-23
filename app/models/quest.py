@@ -38,6 +38,11 @@ class Quest:
     next_quests: list[str] = field(default_factory=list)
     status: str = "new"
 
+    def __post_init__(self):
+        """Enforce invariants: subquests cannot be recurring."""
+        if self.overquest_id and self.recurrence != "none":
+            self.recurrence = "none"
+
     def can_pause(self) -> bool:
         """Only non-recurring quests can be paused."""
         return self.recurrence == "none"

@@ -577,8 +577,26 @@ class QuestScreen(BaseScreen):
         if not quest:
             return
         if quest.is_overquest:
-            self.message = "Cannot start an overquest directly. Start its subquests."
-            return
+            # Proxy: start the first available (deps satisfied, not started, not paused) subquest
+            subs = sorted(
+                [q for q in self.quests if q.overquest_id == quest.id],
+                key=lambda q: q.name.lower(),
+            )
+            target = None
+            for sq in subs:
+                if sq.status == "completed":
+                    continue
+                if sq.paused:
+                    continue
+                if sq.id in self.active_quests:
+                    continue
+                if self._deps_satisfied(sq):
+                    target = sq
+                    break
+            if not target:
+                self.message = "No available subquest to start (all started, completed, or locked)."
+                return
+            quest = target
         if quest.paused:
             self.message = "Cannot start a paused quest. Unpause first (press 'p')."
             return
@@ -624,6 +642,14 @@ class QuestScreen(BaseScreen):
             save_inventory(self.character.name, inventory)
             msg += f" | Item: {item.name} ({item.rarity})"
 
+        # Check if this completion triggers an overquest completion
+        # (must check BEFORE removing quest from self.quests)
+        overquest_completed = False
+        if quest.overquest_id:
+            overquest = get_quest_by_id(self.quests, quest.overquest_id)
+            if overquest and check_overquest_completion(self.quests, overquest):
+                overquest_completed = True
+
         # Move non-recurring quests to completed list
         if quest.recurrence == "none":
             self.quests.remove(quest)
@@ -633,23 +659,36 @@ class QuestScreen(BaseScreen):
 
         save_quests(self.character.name, self.quests)
 
-        # Check if this completion triggers an overquest completion
-        if quest.overquest_id:
-            overquest = get_quest_by_id(self.quests, quest.overquest_id)
-            if overquest and check_overquest_completion(self.quests, overquest):
-                oq_log, oq_item = complete_overquest(
-                    self.quests, overquest, self.character
-                )
-                save_character(self.character)
-                append_quest_log(self.character.name, oq_log)
-                save_quests(self.character.name, self.quests)
-                msg += (f"\n  ★ Quest line '{overquest.name}' COMPLETED!"
-                        f" +{oq_log.xp_granted:.0f} XP")
-                if oq_item:
-                    inventory = load_inventory(self.character.name)
-                    inventory.append(oq_item)
-                    save_inventory(self.character.name, inventory)
-                    msg += f" | Item: {oq_item.name} ({oq_item.rarity})"
+        # Handle overquest completion (move entire quest line to completed)
+        if overquest_completed:
+            oq_log, oq_item = complete_overquest(
+                self.quests, overquest, self.character
+            )
+            save_character(self.character)
+            append_quest_log(self.character.name, oq_log)
+
+            # Move overquest and all its subquests to completed list
+            subs_to_move = [q for q in self.quests if q.overquest_id == overquest.id]
+            for sq in subs_to_move:
+                sq.active = False
+                if sq not in self.completed_quests:
+                    self.completed_quests.append(sq)
+                if sq in self.quests:
+                    self.quests.remove(sq)
+            overquest.active = False
+            if overquest in self.quests:
+                self.quests.remove(overquest)
+            self.completed_quests.append(overquest)
+            save_completed_quests(self.character.name, self.completed_quests)
+            save_quests(self.character.name, self.quests)
+
+            msg += (f"\n  ★ Quest line '{overquest.name}' COMPLETED!"
+                    f" +{oq_log.xp_granted:.0f} XP")
+            if oq_item:
+                inventory = load_inventory(self.character.name)
+                inventory.append(oq_item)
+                save_inventory(self.character.name, inventory)
+                msg += f" | Item: {oq_item.name} ({oq_item.rarity})"
 
         self.message = msg
         self.picker = None
@@ -693,8 +732,21 @@ class QuestScreen(BaseScreen):
         if not quest:
             return
         if quest.is_overquest:
-            self.message = "Cannot pause an overquest."
-            return
+            # Proxy: pause/unpause the first active (started) subquest
+            subs = sorted(
+                [q for q in self.quests if q.overquest_id == quest.id],
+                key=lambda q: q.name.lower(),
+            )
+            # Find first started subquest to pause, or first paused to unpause
+            started = [sq for sq in subs if sq.id in self.active_quests and not sq.paused]
+            paused = [sq for sq in subs if sq.paused]
+            if started:
+                quest = started[0]
+            elif paused:
+                quest = paused[0]
+            else:
+                self.message = "No subquest to pause/unpause."
+                return
         if not quest.can_pause():
             self.message = "Recurring quests cannot be paused."
             return

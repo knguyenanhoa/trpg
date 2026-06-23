@@ -96,5 +96,237 @@
     "overquest_id": "726db700-f126-4547-bbca-8fe4f26816e0",
     "next_quests": [],
     "status": "completed"
+  },
+  {
+    "id": "58bd2589-f44e-4713-adfd-7c3614244361",
+    "name": "Pick a Subject",
+    "description": "Choose a topic you want to learn deeply.",
+    "difficulty": 0.5,
+    "stats": [
+      "int"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T13:26:13.330000+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "ca400715-825a-48e6-93bc-726f2c5ec6c1",
+    "next_quests": [
+      "ed863c77-d14a-4dd8-8d14-9fbc0a65811f"
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "ed863c77-d14a-4dd8-8d14-9fbc0a65811f",
+    "name": "Read for One Hour",
+    "description": "Spend one focused hour reading about your subject.",
+    "difficulty": 1.5,
+    "stats": [
+      "int",
+      "wis"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T13:26:13.330021+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "ca400715-825a-48e6-93bc-726f2c5ec6c1",
+    "next_quests": [
+      "d06c91d5-370e-47bd-bfa7-0d98b82e2553",
+      "250dd3b2-0250-4cf1-8451-69ca4237d836"
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "d06c91d5-370e-47bd-bfa7-0d98b82e2553",
+    "name": "Take Notes",
+    "description": "Summarize what you learned in your own words.",
+    "difficulty": 2.0,
+    "stats": [
+      "int",
+      "wis"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T13:26:13.330035+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "ca400715-825a-48e6-93bc-726f2c5ec6c1",
+    "next_quests": [
+      "3f03cea4-2e29-48fc-b520-0bbf46971969"
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "250dd3b2-0250-4cf1-8451-69ca4237d836",
+    "name": "Teach Someone",
+    "description": "Explain what you learned to another person.",
+    "difficulty": 2.5,
+    "stats": [
+      "cha",
+      "int"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T13:26:13.330050+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "ca400715-825a-48e6-93bc-726f2c5ec6c1",
+    "next_quests": [
+      "3f03cea4-2e29-48fc-b520-0bbf46971969"
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "3f03cea4-2e29-48fc-b520-0bbf46971969",
+    "name": "Apply the Knowledge",
+    "description": "Use what you learned in a practical project or situation.",
+    "difficulty": 3.5,
+    "stats": [
+      "int",
+      "wis"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T13:26:13.330062+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "ca400715-825a-48e6-93bc-726f2c5ec6c1",
+    "next_quests": [],
+    "status": "completed"
+  },
+  {
+    "id": "9fbcae47-c801-446a-b81a-9bd4cf325625",
+    "name": "Say Hi to a Stranger",
+    "description": "Greet someone you don't know in a friendly way.",
+    "difficulty": 1.0,
+    "stats": [
+      "cha"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T13:35:13.324583+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "fa3d1b42-27bd-4e62-a071-e2e526f90c96",
+    "next_quests": [
+      "93007fac-f4b9-417f-8258-47bcbd410e9f"
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "93007fac-f4b9-417f-8258-47bcbd410e9f",
+    "name": "Have a 5-Minute Conversation",
+    "description": "Engage in a conversation lasting at least 5 minutes with someone new.",
+    "difficulty": 2.0,
+    "stats": [
+      "cha",
+      "wis"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T13:35:13.324597+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "fa3d1b42-27bd-4e62-a071-e2e526f90c96",
+    "next_quests": [
+      "bbc47248-86d6-428f-94c7-f8c35f7616bc"
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "bbc47248-86d6-428f-94c7-f8c35f7616bc",
+    "name": "Plan a Group Activity",
+    "description": "Organize and lead a social gathering or group activity.",
+    "difficulty": 3.0,
+    "stats": [
+      "cha",
+      "wis",
+      "int"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T13:35:13.324608+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "fa3d1b42-27bd-4e62-a071-e2e526f90c96",
+    "next_quests": [],
+    "status": "completed"
+  },
+  {
+    "id": "9c1d4155-bc3b-477a-a46f-1ef961ee2524",
+    "name": "Say Hi to a Stranger",
+    "description": "Greet someone you don't know in a friendly way.",
+    "difficulty": 1.0,
+    "stats": [
+      "cha"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T13:41:29.361421+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "b8a64e9c-4119-4b0e-b622-adc721fbc0f3",
+    "next_quests": [
+      "f4e9a51e-9145-41f2-b608-0ac94b158c21"
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "f4e9a51e-9145-41f2-b608-0ac94b158c21",
+    "name": "Have a 5-Minute Conversation",
+    "description": "Engage in a conversation lasting at least 5 minutes with someone new.",
+    "difficulty": 2.0,
+    "stats": [
+      "cha",
+      "wis"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T13:41:29.361441+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "b8a64e9c-4119-4b0e-b622-adc721fbc0f3",
+    "next_quests": [
+      "c04b69e2-d009-460a-9992-39974bc411c6"
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "c04b69e2-d009-460a-9992-39974bc411c6",
+    "name": "Plan a Group Activity",
+    "description": "Organize and lead a social gathering or group activity.",
+    "difficulty": 3.0,
+    "stats": [
+      "cha",
+      "wis",
+      "int"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T13:41:29.361455+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "b8a64e9c-4119-4b0e-b622-adc721fbc0f3",
+    "next_quests": [],
+    "status": "completed"
+  },
+  {
+    "id": "b8a64e9c-4119-4b0e-b622-adc721fbc0f3",
+    "name": "Social Butterfly",
+    "description": "Develop your social confidence through progressive challenges.",
+    "difficulty": 3.0,
+    "stats": [
+      "cha",
+      "wis"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T13:41:29.360959+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": true,
+    "overquest_id": null,
+    "next_quests": [],
+    "status": "completed"
   }
 ]

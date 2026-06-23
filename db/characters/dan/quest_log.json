@@ -67,5 +67,172 @@
       "wis"
     ],
     "item_dropped": "1edb5832-8fde-491f-8a5f-be65896fd2cb"
+  },
+  {
+    "quest_id": "58bd2589-f44e-4713-adfd-7c3614244361",
+    "quest_name": "Pick a Subject",
+    "status": "completed",
+    "started_at": "2026-06-23T13:26:22.901007+07:00",
+    "completed_at": "2026-06-23T13:26:24.166423+07:00",
+    "duration_seconds": 1,
+    "xp_granted": 2,
+    "stats_affected": [
+      "int"
+    ],
+    "item_dropped": null
+  },
+  {
+    "quest_id": "ed863c77-d14a-4dd8-8d14-9fbc0a65811f",
+    "quest_name": "Read for One Hour",
+    "status": "completed",
+    "started_at": "2026-06-23T13:26:26.764412+07:00",
+    "completed_at": "2026-06-23T13:26:28.460527+07:00",
+    "duration_seconds": 1,
+    "xp_granted": 22,
+    "stats_affected": [
+      "int",
+      "wis"
+    ],
+    "item_dropped": "488bbc7d-760c-405b-b0b8-d8af133b71f1"
+  },
+  {
+    "quest_id": "d06c91d5-370e-47bd-bfa7-0d98b82e2553",
+    "quest_name": "Take Notes",
+    "status": "completed",
+    "started_at": "2026-06-23T13:26:29.763627+07:00",
+    "completed_at": "2026-06-23T13:26:31.655987+07:00",
+    "duration_seconds": 1,
+    "xp_granted": 40,
+    "stats_affected": [
+      "int",
+      "wis"
+    ],
+    "item_dropped": "fe41c036-5fda-4eed-9b5e-8ff9c857e5ce"
+  },
+  {
+    "quest_id": "250dd3b2-0250-4cf1-8451-69ca4237d836",
+    "quest_name": "Teach Someone",
+    "status": "completed",
+    "started_at": "2026-06-23T13:26:30.798094+07:00",
+    "completed_at": "2026-06-23T13:26:32.513123+07:00",
+    "duration_seconds": 1,
+    "xp_granted": 62,
+    "stats_affected": [
+      "cha",
+      "int"
+    ],
+    "item_dropped": null
+  },
+  {
+    "quest_id": "3f03cea4-2e29-48fc-b520-0bbf46971969",
+    "quest_name": "Apply the Knowledge",
+    "status": "completed",
+    "started_at": "2026-06-23T13:26:33.649111+07:00",
+    "completed_at": "2026-06-23T13:26:38.714338+07:00",
+    "duration_seconds": 5,
+    "xp_granted": 122,
+    "stats_affected": [
+      "int",
+      "wis"
+    ],
+    "item_dropped": null
+  },
+  {
+    "quest_id": "9fbcae47-c801-446a-b81a-9bd4cf325625",
+    "quest_name": "Say Hi to a Stranger",
+    "status": "completed",
+    "started_at": "2026-06-23T13:35:14.997726+07:00",
+    "completed_at": "2026-06-23T13:35:24.079033+07:00",
+    "duration_seconds": 9,
+    "xp_granted": 10,
+    "stats_affected": [
+      "cha"
+    ],
+    "item_dropped": "b0925462-fc7e-4abf-8554-d0af7e7984fd"
+  },
+  {
+    "quest_id": "93007fac-f4b9-417f-8258-47bcbd410e9f",
+    "quest_name": "Have a 5-Minute Conversation",
+    "status": "completed",
+    "started_at": "2026-06-23T13:35:24.798140+07:00",
+    "completed_at": "2026-06-23T13:35:26.359563+07:00",
+    "duration_seconds": 1,
+    "xp_granted": 40,
+    "stats_affected": [
+      "cha",
+      "wis"
+    ],
+    "item_dropped": "e2054e49-e92d-459e-9ee5-9b1186fca1d6"
+  },
+  {
+    "quest_id": "bbc47248-86d6-428f-94c7-f8c35f7616bc",
+    "quest_name": "Plan a Group Activity",
+    "status": "completed",
+    "started_at": "2026-06-23T13:35:26.843704+07:00",
+    "completed_at": "2026-06-23T13:35:27.981385+07:00",
+    "duration_seconds": 1,
+    "xp_granted": 90,
+    "stats_affected": [
+      "cha",
+      "wis",
+      "int"
+    ],
+    "item_dropped": null
+  },
+  {
+    "quest_id": "9c1d4155-bc3b-477a-a46f-1ef961ee2524",
+    "quest_name": "Say Hi to a Stranger",
+    "status": "completed",
+    "started_at": "2026-06-23T13:41:30.354993+07:00",
+    "completed_at": "2026-06-23T13:41:33.291477+07:00",
+    "duration_seconds": 2,
+    "xp_granted": 10,
+    "stats_affected": [
+      "cha"
+    ],
+    "item_dropped": null
+  },
+  {
+    "quest_id": "f4e9a51e-9145-41f2-b608-0ac94b158c21",
+    "quest_name": "Have a 5-Minute Conversation",
+    "status": "completed",
+    "started_at": "2026-06-23T13:41:34.008445+07:00",
+    "completed_at": "2026-06-23T13:41:35.091555+07:00",
+    "duration_seconds": 1,
+    "xp_granted": 40,
+    "stats_affected": [
+      "cha",
+      "wis"
+    ],
+    "item_dropped": "6fb6cf92-5bdf-41c5-9b98-06a273894745"
+  },
+  {
+    "quest_id": "c04b69e2-d009-460a-9992-39974bc411c6",
+    "quest_name": "Plan a Group Activity",
+    "status": "completed",
+    "started_at": "2026-06-23T13:41:35.492202+07:00",
+    "completed_at": "2026-06-23T13:41:36.213494+07:00",
+    "duration_seconds": 0,
+    "xp_granted": 90,
+    "stats_affected": [
+      "cha",
+      "wis",
+      "int"
+    ],
+    "item_dropped": null
+  },
+  {
+    "quest_id": "b8a64e9c-4119-4b0e-b622-adc721fbc0f3",
+    "quest_name": "Social Butterfly",
+    "status": "completed",
+    "started_at": "2026-06-23T13:41:29.360959+07:00",
+    "completed_at": "2026-06-23T13:41:36.215581+07:00",
+    "duration_seconds": 0,
+    "xp_granted": 270.0,
+    "stats_affected": [
+      "cha",
+      "wis"
+    ],
+    "item_dropped": "3cf610d8-d7f6-4c95-816f-3e5ddca44c21"
   }
 ]

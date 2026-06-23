@@ -49,5 +49,107 @@
     "sprite": "assets/items/leather_leggings.txt",
     "acquired_at": "2026-06-23T13:24:08.296170+07:00",
     "equipped": false
+  },
+  {
+    "id": "488bbc7d-760c-405b-b0b8-d8af133b71f1",
+    "name": "Chain Mail",
+    "slot": "chest",
+    "rarity": "normal",
+    "stats": {
+      "istr": -6.0,
+      "idex": -5.5,
+      "icon": 3.8,
+      "iint": -5.3,
+      "iwis": 11,
+      "icha": -6.6
+    },
+    "sprite": "assets/items/chain_mail.txt",
+    "acquired_at": "2026-06-23T13:26:28.460914+07:00",
+    "equipped": false
+  },
+  {
+    "id": "fe41c036-5fda-4eed-9b5e-8ff9c857e5ce",
+    "name": "War Hammer",
+    "slot": "weapon",
+    "rarity": "legendary",
+    "stats": {
+      "istr": 11,
+      "idex": -0.3,
+      "icon": 11,
+      "iint": -2.5,
+      "iwis": 11,
+      "icha": -1.1
+    },
+    "sprite": "assets/items/war_hammer.txt",
+    "acquired_at": "2026-06-23T13:26:31.656291+07:00",
+    "equipped": false
+  },
+  {
+    "id": "b0925462-fc7e-4abf-8554-d0af7e7984fd",
+    "name": "Iron Ring",
+    "slot": "accessory",
+    "rarity": "normal",
+    "stats": {
+      "istr": 1.4,
+      "idex": 0.2,
+      "icon": -1.8,
+      "iint": 2.4,
+      "iwis": 1.3,
+      "icha": -1.8
+    },
+    "sprite": "assets/items/iron_ring.txt",
+    "acquired_at": "2026-06-23T13:35:24.080960+07:00",
+    "equipped": false
+  },
+  {
+    "id": "e2054e49-e92d-459e-9ee5-9b1186fca1d6",
+    "name": "Iron Greaves",
+    "slot": "feet",
+    "rarity": "rare",
+    "stats": {
+      "istr": 8.7,
+      "idex": -2.8,
+      "icon": -2.8,
+      "iint": 1.5,
+      "iwis": 0.8,
+      "icha": -4.8
+    },
+    "sprite": "assets/items/iron_greaves.txt",
+    "acquired_at": "2026-06-23T13:35:26.359884+07:00",
+    "equipped": false
+  },
+  {
+    "id": "6fb6cf92-5bdf-41c5-9b98-06a273894745",
+    "name": "Plate Armor",
+    "slot": "chest",
+    "rarity": "normal",
+    "stats": {
+      "istr": 2.6,
+      "idex": 1.8,
+      "icon": -4.4,
+      "iint": 2.3,
+      "iwis": 6.0,
+      "icha": -6.8
+    },
+    "sprite": "assets/items/plate_armor.txt",
+    "acquired_at": "2026-06-23T13:41:35.093394+07:00",
+    "equipped": false
+  },
+  {
+    "id": "3cf610d8-d7f6-4c95-816f-3e5ddca44c21",
+    "name": "Steel Helm",
+    "slot": "head",
+    "rarity": "legendary",
+    "stats": {
+      "istr": -4.9,
+      "idex": -3.0,
+      "icon": 11,
+      "iint": -6.9,
+      "iwis": 7.8,
+      "icha": 8.0
+    },
+    "sprite": "assets/items/steel_helm.txt",
+    "acquired_at": "2026-06-23T13:41:36.215849+07:00",
+    "equipped": false
   }
 ]
