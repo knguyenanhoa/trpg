@@ -1,132 +1,71 @@
 [
   {
-    "quest_id": "5e34b1e4-801b-4489-8a74-97b7acd0c45c",
-    "quest_name": "gym",
+    "quest_id": "9f25ec19-305b-4830-af56-d5b1e5567f97",
+    "quest_name": "Pick a Subject",
     "status": "completed",
-    "started_at": "2026-06-15T21:54:51.498984+07:00",
-    "completed_at": "2026-06-15T21:55:42.623191+07:00",
-    "duration_seconds": 51,
-    "xp_granted": 10,
+    "started_at": "2026-06-23T13:23:45.537772+07:00",
+    "completed_at": "2026-06-23T13:23:50.081824+07:00",
+    "duration_seconds": 4,
+    "xp_granted": 2,
     "stats_affected": [
-      "str",
-      "con",
-      "cha"
-    ],
-    "item_dropped": null
-  },
-  {
-    "quest_id": "0132cf19-4d67-4d62-b702-0afb7d9f88fb",
-    "quest_name": "go tax",
-    "status": "completed",
-    "started_at": "2026-06-15T21:54:59.739768+07:00",
-    "completed_at": "2026-06-15T21:55:47.922998+07:00",
-    "duration_seconds": 48,
-    "xp_granted": 90,
-    "stats_affected": [
-      "int",
-      "wis"
-    ],
-    "item_dropped": null
-  },
-  {
-    "quest_id": "0132cf19-4d67-4d62-b702-0afb7d9f88fb",
-    "quest_name": "go tax",
-    "status": "completed",
-    "started_at": "2026-06-15T22:03:51.633732+07:00",
-    "completed_at": "2026-06-15T22:03:53.117825+07:00",
-    "duration_seconds": 1,
-    "xp_granted": 90,
-    "stats_affected": [
-      "int",
-      "wis"
-    ],
-    "item_dropped": null
-  },
-  {
-    "quest_id": "3b978b99-4cca-4d83-9845-76787139fa1c",
-    "quest_name": "test quest",
-    "status": "completed",
-    "started_at": "2026-06-15T22:12:19.132343+07:00",
-    "completed_at": "2026-06-15T22:12:20.764604+07:00",
-    "duration_seconds": 1,
-    "xp_granted": 250,
-    "stats_affected": [
-      "str",
-      "dex",
       "int"
     ],
-    "item_dropped": "884197da-c31e-4e20-baff-a89daaad2cbe"
+    "item_dropped": "355cd9f6-40ff-4a14-8dd9-3829fee61d16"
   },
   {
-    "quest_id": "0af77c5e-cf1a-4ea6-8fcb-bf48a9a88d33",
-    "quest_name": "do phieu thu",
+    "quest_id": "cfc628d1-e7e1-4e77-8c42-7e7377aa59c0",
+    "quest_name": "Read for One Hour",
     "status": "completed",
-    "started_at": "2026-06-15T22:30:37.307240+07:00",
-    "completed_at": "2026-06-15T22:30:39.380800+07:00",
-    "duration_seconds": 2,
-    "xp_granted": 40,
+    "started_at": "2026-06-23T13:23:56.513415+07:00",
+    "completed_at": "2026-06-23T13:23:57.890222+07:00",
+    "duration_seconds": 1,
+    "xp_granted": 22,
     "stats_affected": [
-      "str",
-      "dex"
-    ],
-    "item_dropped": "fa5c71e9-42a5-4f7f-bdec-1442bfbcfa18"
-  },
-  {
-    "quest_id": "ba61d9dd-7b00-4d18-af54-a321b7407881",
-    "quest_name": "First Workout",
-    "status": "completed",
-    "started_at": "2026-06-23T11:46:36.585182+07:00",
-    "completed_at": "2026-06-23T11:46:46.386673+07:00",
-    "duration_seconds": 9,
-    "xp_granted": 10,
-    "stats_affected": [
-      "str",
-      "con"
+      "int",
+      "wis"
     ],
     "item_dropped": null
   },
   {
-    "quest_id": "bd10ca21-1785-4f97-b4b6-afd84b804228",
-    "quest_name": "One Week Consistent",
+    "quest_id": "7b3a235c-082c-4e6c-bcd3-538300c0bf5f",
+    "quest_name": "Take Notes",
     "status": "completed",
-    "started_at": "2026-06-23T11:47:40.697050+07:00",
-    "completed_at": "2026-06-23T11:47:42.878370+07:00",
-    "duration_seconds": 2,
-    "xp_granted": 90,
+    "started_at": "2026-06-23T13:24:04.210017+07:00",
+    "completed_at": "2026-06-23T13:24:06.029397+07:00",
+    "duration_seconds": 1,
+    "xp_granted": 40,
     "stats_affected": [
-      "str",
-      "con",
-      "dex"
+      "int",
+      "wis"
     ],
-    "item_dropped": "d7228a50-5db4-4a24-936e-03ba9ac4ff62"
+    "item_dropped": "9c6e0352-20f8-434f-aa95-5a469a79e522"
   },
   {
-    "quest_id": "5e34b1e4-801b-4489-8a74-97b7acd0c45c",
-    "quest_name": "gym",
+    "quest_id": "bfea4a49-8883-47a5-a5e6-e4f7b59e871e",
+    "quest_name": "Teach Someone",
     "status": "completed",
-    "started_at": "2026-06-15T22:03:32.684849+07:00",
-    "completed_at": "2026-06-23T11:47:46.665477+07:00",
-    "duration_seconds": 654253,
-    "xp_granted": 10,
+    "started_at": "2026-06-23T13:24:05.171277+07:00",
+    "completed_at": "2026-06-23T13:24:06.947471+07:00",
+    "duration_seconds": 1,
+    "xp_granted": 62,
     "stats_affected": [
-      "str",
-      "con",
-      "cha"
+      "cha",
+      "int"
     ],
     "item_dropped": null
   },
   {
-    "quest_id": "3bc3d3c4-044e-4934-a0d8-0ced66a79c31",
-    "quest_name": "Three Day Streak",
+    "quest_id": "c3215743-dda7-41fd-92a0-cd7bf40118a3",
+    "quest_name": "Apply the Knowledge",
     "status": "completed",
-    "started_at": "2026-06-23T11:47:45.336863+07:00",
-    "completed_at": "2026-06-23T11:47:47.923250+07:00",
-    "duration_seconds": 2,
-    "xp_granted": 40,
+    "started_at": "2026-06-23T13:24:07.630133+07:00",
+    "completed_at": "2026-06-23T13:24:08.295873+07:00",
+    "duration_seconds": 0,
+    "xp_granted": 122,
     "stats_affected": [
-      "str",
-      "con"
+      "int",
+      "wis"
     ],
-    "item_dropped": "42f7097c-cd84-4647-a8af-6bd6c6d34167"
+    "item_dropped": "1edb5832-8fde-491f-8a5f-be65896fd2cb"
   }
 ]

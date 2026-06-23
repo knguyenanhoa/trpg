@@ -8,7 +8,7 @@ from app.tui.base_screen import BaseScreen
 from app.config import DEFINITIONS_PATH, ASSETS_PATH, CS_STATS
 from app.models.character import Character
 from app.models.stats import CharacterStats
-from app.db.file_store import save_character
+from app.db.file_store import save_character, load_premade_quest_templates, save_quest_templates
 from app.utils.sanitize import validate_name, sanitize_name, validate_int
 from app.utils.colors import PORTRAIT_COLORS
 from app.utils.time_utils import now_iso
@@ -271,6 +271,9 @@ class CharacterCreateScreen(BaseScreen):
         )
 
         save_character(character)
+        # Seed quest templates from premade list for new characters
+        premade = load_premade_quest_templates()
+        save_quest_templates(character.name, premade)
         # Go to main menu with new character
         from app.tui.main_menu import MainMenuScreen
         self.manager.replace(MainMenuScreen(character))

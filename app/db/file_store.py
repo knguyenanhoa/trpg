@@ -188,3 +188,22 @@ def load_premade_quest_templates() -> list[dict]:
     path = os.path.join(DEFINITIONS_PATH, "premade_quests.json")
     data = _read_json(path, default={"templates": []})
     return data.get("templates", [])
+
+
+# --- Per-character quest templates ---
+
+def save_quest_templates(character_name: str, templates: list[dict]):
+    """Save quest templates for a character.
+
+    Templates are raw dicts (same format as premade_quests.json entries).
+    They are independent from live quests — editing one does not affect the other.
+    """
+    path = os.path.join(_char_dir(character_name), "quest_templates.json")
+    _atomic_write(path, templates)
+
+
+def load_quest_templates(character_name: str) -> list[dict]:
+    """Load quest templates for a character."""
+    path = os.path.join(_char_dir(character_name), "quest_templates.json")
+    return _read_json(path, default=[])
+

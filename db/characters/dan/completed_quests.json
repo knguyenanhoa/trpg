@@ -1,61 +1,100 @@
 [
   {
-    "id": "ba61d9dd-7b00-4d18-af54-a321b7407881",
-    "name": "First Workout",
-    "description": "Complete your first real workout session.",
-    "difficulty": 1.0,
+    "id": "9f25ec19-305b-4830-af56-d5b1e5567f97",
+    "name": "Pick a Subject",
+    "description": "Choose a topic you want to learn deeply.",
+    "difficulty": 0.5,
     "stats": [
-      "str",
-      "con"
+      "int"
     ],
     "recurrence": "none",
-    "created_at": "2026-06-23T11:18:05.495736+07:00",
+    "created_at": "2026-06-23T13:21:25.470749+07:00",
     "active": false,
     "paused": false,
     "is_overquest": false,
-    "overquest_id": "e4420f4c-f79a-4c02-b125-235b6c160565",
+    "overquest_id": "726db700-f126-4547-bbca-8fe4f26816e0",
     "next_quests": [
-      "3bc3d3c4-044e-4934-a0d8-0ced66a79c31"
+      "cfc628d1-e7e1-4e77-8c42-7e7377aa59c0"
     ],
     "status": "completed"
   },
   {
-    "id": "bd10ca21-1785-4f97-b4b6-afd84b804228",
-    "name": "One Week Consistent",
-    "description": "Maintain a workout routine for one full week.",
-    "difficulty": 3.0,
+    "id": "cfc628d1-e7e1-4e77-8c42-7e7377aa59c0",
+    "name": "Read for One Hour",
+    "description": "Spend one focused hour reading about your subject.",
+    "difficulty": 1.5,
     "stats": [
-      "str",
-      "con",
-      "dex"
+      "int",
+      "wis"
     ],
     "recurrence": "none",
-    "created_at": "2026-06-23T11:18:05.495769+07:00",
+    "created_at": "2026-06-23T13:21:25.470784+07:00",
     "active": false,
     "paused": false,
     "is_overquest": false,
-    "overquest_id": "e4420f4c-f79a-4c02-b125-235b6c160565",
-    "next_quests": [],
+    "overquest_id": "726db700-f126-4547-bbca-8fe4f26816e0",
+    "next_quests": [
+      "7b3a235c-082c-4e6c-bcd3-538300c0bf5f",
+      "bfea4a49-8883-47a5-a5e6-e4f7b59e871e"
+    ],
     "status": "completed"
   },
   {
-    "id": "3bc3d3c4-044e-4934-a0d8-0ced66a79c31",
-    "name": "Three Day Streak",
-    "description": "Work out three days in a row.",
+    "id": "7b3a235c-082c-4e6c-bcd3-538300c0bf5f",
+    "name": "Take Notes",
+    "description": "Summarize what you learned in your own words.",
     "difficulty": 2.0,
     "stats": [
-      "str",
-      "con"
+      "int",
+      "wis"
     ],
     "recurrence": "none",
-    "created_at": "2026-06-23T11:18:05.495754+07:00",
+    "created_at": "2026-06-23T13:21:25.470802+07:00",
     "active": false,
     "paused": false,
     "is_overquest": false,
-    "overquest_id": "e4420f4c-f79a-4c02-b125-235b6c160565",
+    "overquest_id": "726db700-f126-4547-bbca-8fe4f26816e0",
     "next_quests": [
-      "bd10ca21-1785-4f97-b4b6-afd84b804228"
+      "c3215743-dda7-41fd-92a0-cd7bf40118a3"
     ],
+    "status": "completed"
+  },
+  {
+    "id": "bfea4a49-8883-47a5-a5e6-e4f7b59e871e",
+    "name": "Teach Someone",
+    "description": "Explain what you learned to another person.",
+    "difficulty": 2.5,
+    "stats": [
+      "cha",
+      "int"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T13:21:25.470816+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "726db700-f126-4547-bbca-8fe4f26816e0",
+    "next_quests": [
+      "c3215743-dda7-41fd-92a0-cd7bf40118a3"
+    ],
+    "status": "completed"
+  },
+  {
+    "id": "c3215743-dda7-41fd-92a0-cd7bf40118a3",
+    "name": "Apply the Knowledge",
+    "description": "Use what you learned in a practical project or situation.",
+    "difficulty": 3.5,
+    "stats": [
+      "int",
+      "wis"
+    ],
+    "recurrence": "none",
+    "created_at": "2026-06-23T13:21:25.470829+07:00",
+    "active": false,
+    "paused": false,
+    "is_overquest": false,
+    "overquest_id": "726db700-f126-4547-bbca-8fe4f26816e0",
+    "next_quests": [],
     "status": "completed"
   }
 ]

@@ -51,13 +51,28 @@ This is a TUI RPG for real life, so anyone can create a character, define their 
 - Inserting a new quest into the network re-links predecessors (standard linked-list insertion).
 - Deleting a quest from the network reassigns its predecessors to point to its successors (dependency reassignment).
 - Quests can be reassigned to a different position in the network.
-- The active quest list (quest screen) filters out overquests and shows a `[QuestLine]` tag for subquests.
+- A quest cannot be started unless all of its dependencies (predecessors within the same overquest) have been completed. Locked quests display a "⊘ LOCKED" indicator.
 
-## Quest editor
-- A dedicated "Quest Editor" screen accessible from the main menu manages quest lines.
-- Modes: browse overquests, view subquests of an overquest, create overquest, add subquest, edit dependencies, apply premade template.
-- The editor supports creating overquests, adding/removing subquests, and toggling next_quests dependencies between subquests.
-- A bank of premade quest tree templates is available at `definitions/premade_quests.json`. Selecting a template auto-generates the overquest and all its subquests with proper dependency linking.
+## Quest screen UI structure
+- The quest screen displays quests hierarchically in both Active and Completed tabs:
+  - **Overquests** appear as top-level foldable headers with a fold icon (▼ expanded, ▶ collapsed) and a progress counter `[done/total]`.
+  - **Subquests** are indented below their overquest when unfolded.
+  - **Standalone quests** (no overquest) appear at top level without indent.
+- Folding: press `f` or `Space` on an overquest to collapse/expand its subquests. Pressing on a subquest folds its parent.
+- Status icons: ○ new, ◐ started, ● completed, ◫ paused, ⊘ locked (deps not met).
+- Color indicators on the right: green "■ STARTED", red "■ PAUSED", dim "⊘ LOCKED", green "★ DONE" for completed overquests.
+- Overquests cannot be started, paused, or deleted from the quest screen (use Quest Editor for that).
+- The quest list shows a `+ From Template` action item alongside `+ New Quest`. Selecting it opens a template picker that lists the character's templates; choosing one instantiates a full quest line (overquest + subquests) into the live quest list.
+- Completed tab uses the same hierarchy: completed overquests shown as foldable headers with their completed subquests nested inside.
+
+## Quest editor (template manager)
+- A dedicated "Quest Editor" screen accessible from the main menu manages per-character **quest templates**.
+- **Templates are separate from active quests.** A template is a blueprint for a quest line. Once instantiated, the resulting quests are independent — editing a quest does not affect its source template and vice versa.
+- When a new character is created, the premade templates from `definitions/premade_quests.json` are copied into the character's template library (`quest_templates.json`).
+- After creation, each character can freely add/remove templates from their own library.
+- Template editor modes: browse templates, view subquests of a template, create new template, add subquest, edit dependencies within a template, add from premade library.
+- Press `u` on a template to **instantiate** it: this creates a real overquest + subquests in the character's live quest list (quests.json) with fresh UUIDs and proper dependency linking.
+- The quest screen (Active/Completed tabs) only shows instantiated quests — never templates.
 - Premade templates: Fitness Foundation, Knowledge Seeker, Social Butterfly, Daily Discipline, Creative Sprint.
 
 # Items design
@@ -88,7 +103,7 @@ This is a TUI RPG for real life, so anyone can create a character, define their 
 - definitions/stat_tables_female.json — Female age bracket mapping to base stats.
 - assets/portraits/ — ASCII character portraits (.txt files).
 - assets/items/ — ASCII item sprites (.txt files).
-- db/ — Runtime data, organized per character (db/characters/{name}/). Contains character.json, quests.json, quest_log.json, inventory.json, active_quests.json, completed_quests.json per character.
+- db/ — Runtime data, organized per character (db/characters/{name}/). Contains character.json, quests.json, quest_log.json, inventory.json, active_quests.json, completed_quests.json, quest_templates.json per character.
 - db/config.json — Global configuration (timezone, last_played character).
 
 # Architecture and required tech stack
@@ -128,7 +143,7 @@ x-lrpg/
 │   │   ├── main_menu.py            # Main menu (Stats/Quests/Quest Editor/Inventory)
 │   │   ├── stats_screen.py         # Stat viewing with XP bars
 │   │   ├── quest_screen.py         # Quest list, creation, start, complete, pause
-│   │   ├── quest_editor.py         # Quest editor: overquests, subquests, dependencies, templates
+│   │   ├── quest_editor.py         # Quest template manager: create, edit, instantiate templates
 │   │   ├── inventory_screen.py     # Item viewing, equip/unequip
 │   │   └── fzf_picker.py           # FZF integration + built-in fallback
 │   ├── models/
@@ -167,6 +182,7 @@ x-lrpg/
 │           ├── character.json
 │           ├── quests.json
 │           ├── quest_log.json
+│           ├── quest_templates.json
 │           ├── inventory.json
 │           ├── active_quests.json
 │           └── completed_quests.json
@@ -194,11 +210,13 @@ x-lrpg/
 | / | Search (in lists) |
 | n | New (character, quest, or overquest) |
 | d | Delete (character, quest, overquest, subquest) |
-| s | Start quest |
+| s | Start quest (blocked if dependencies not met) |
 | c | Complete quest |
 | p | Pause/unpause quest (non-recurring only) |
+| f | Fold/unfold overquest (toggle subquest visibility) |
 | t | Browse premade templates (quest editor) |
 | a | Add subquest (quest editor view mode) |
+| u | Use/instantiate template into live quests (quest editor) |
 | e | Edit dependencies (quest editor) / Switch to equipped tab (inventory) |
 | Tab | Next field (form) / Switch tabs (lists) |
 | Shift-Tab | Previous field (form) |
